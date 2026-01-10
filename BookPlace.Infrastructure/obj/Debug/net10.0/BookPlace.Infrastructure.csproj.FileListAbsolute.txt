@@ -1,0 +1,15 @@
+/home/stephan/Desktop/BookPlace/BookPlace.Infrastructure/bin/Debug/net10.0/BookPlace.Infrastructure.deps.json
+/home/stephan/Desktop/BookPlace/BookPlace.Infrastructure/bin/Debug/net10.0/BookPlace.Infrastructure.dll
+/home/stephan/Desktop/BookPlace/BookPlace.Infrastructure/bin/Debug/net10.0/BookPlace.Infrastructure.pdb
+/home/stephan/Desktop/BookPlace/BookPlace.Infrastructure/bin/Debug/net10.0/BookPlace.Core.dll
+/home/stephan/Desktop/BookPlace/BookPlace.Infrastructure/bin/Debug/net10.0/BookPlace.Core.pdb
+/home/stephan/Desktop/BookPlace/BookPlace.Infrastructure/obj/Debug/net10.0/BookPlace.Infrastructure.csproj.AssemblyReference.cache
+/home/stephan/Desktop/BookPlace/BookPlace.Infrastructure/obj/Debug/net10.0/BookPlace.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+/home/stephan/Desktop/BookPlace/BookPlace.Infrastructure/obj/Debug/net10.0/BookPlace.Infrastructure.AssemblyInfoInputs.cache
+/home/stephan/Desktop/BookPlace/BookPlace.Infrastructure/obj/Debug/net10.0/BookPlace.Infrastructure.AssemblyInfo.cs
+/home/stephan/Desktop/BookPlace/BookPlace.Infrastructure/obj/Debug/net10.0/BookPlace.Infrastructure.csproj.CoreCompileInputs.cache
+/home/stephan/Desktop/BookPlace/BookPlace.Infrastructure/obj/Debug/net10.0/BookPlac.80B2D206.Up2Date
+/home/stephan/Desktop/BookPlace/BookPlace.Infrastructure/obj/Debug/net10.0/BookPlace.Infrastructure.dll
+/home/stephan/Desktop/BookPlace/BookPlace.Infrastructure/obj/Debug/net10.0/refint/BookPlace.Infrastructure.dll
+/home/stephan/Desktop/BookPlace/BookPlace.Infrastructure/obj/Debug/net10.0/BookPlace.Infrastructure.pdb
+/home/stephan/Desktop/BookPlace/BookPlace.Infrastructure/obj/Debug/net10.0/ref/BookPlace.Infrastructure.dll

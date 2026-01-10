@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="BookPlace.Api/BookPlace.Api.csproj" />
+  <Project Path="BookPlace.Core/BookPlace.Core.csproj" />
+  <Project Path="BookPlace.Infrastructure/BookPlace.Infrastructure.csproj" />
+</Solution>
