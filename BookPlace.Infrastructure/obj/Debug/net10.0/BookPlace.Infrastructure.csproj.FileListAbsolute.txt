@@ -13,3 +13,6 @@
 /home/stephan/Desktop/BookPlace/BookPlace.Infrastructure/obj/Debug/net10.0/refint/BookPlace.Infrastructure.dll
 /home/stephan/Desktop/BookPlace/BookPlace.Infrastructure/obj/Debug/net10.0/BookPlace.Infrastructure.pdb
 /home/stephan/Desktop/BookPlace/BookPlace.Infrastructure/obj/Debug/net10.0/ref/BookPlace.Infrastructure.dll
+/home/stephan/Desktop/BookPlace/BookPlace.Infrastructure/obj/Debug/net10.0/BookPlace.Infrastructure.sourcelink.json
+/home/stephan/Desktop/BookPlace/BookPlace.Infrastructure/bin/Debug/net10.0/BookPlace.Infrastructure.runtimeconfig.json
+/home/stephan/Desktop/BookPlace/BookPlace.Infrastructure/obj/Debug/net10.0/BookPlace.Infrastructure.genruntimeconfig.cache
