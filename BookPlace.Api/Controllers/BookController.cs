@@ -19,7 +19,6 @@ public class BookController(AppDbContext context, IWebHostEnvironment environmen
                 Id = b.Id,
                 Title = b.Title,
                 Author = b.Author,
-                AverageGrade = b.AvgGrade
             })
             .ToListAsync();
         return allBooks;

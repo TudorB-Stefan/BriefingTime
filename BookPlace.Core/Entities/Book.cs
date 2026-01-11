@@ -17,11 +17,11 @@ public class Book
     public DateTime ModifiedAt { get; set; } = DateTime.UtcNow;
     
     public string CategoryId { get; set; }
-    public string Category { get; set; }
+    public Category Category { get; set; }
     
     public string UserId { get; set; }
     public User User { get; set; }
 
-    public double AvgGrade { get; set; }
     public ICollection<Review> Reviews { get; set; }
+    public ICollection<FavoriteBook> FavoriteUsers { get; set; }
 }

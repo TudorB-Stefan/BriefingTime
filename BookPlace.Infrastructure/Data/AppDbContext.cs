@@ -22,6 +22,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
             .OnDelete(DeleteBehavior.Restrict);
         builder.Entity<FavoriteBook>()
             .HasKey(f => new { f.UserId, f.BookId });
+        builder.Entity<FavoriteBook>()
+            .HasOne(f => f.Book)
+            .WithMany(b => b.FavoriteUsers)
+            .HasForeignKey(f => f.BookId);
         builder.Entity<DownloadLog>()
             .HasIndex(d => d.UserId);
     }
