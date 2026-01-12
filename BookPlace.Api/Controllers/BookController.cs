@@ -24,7 +24,6 @@ public class BookController(AppDbContext context, IWebHostEnvironment environmen
             .ToListAsync();
         return Ok(allBooks); 
     }
-
     [HttpGet("{id}")]
     public async Task<ActionResult<BookDetailDto>> GetBookDetailById(string id)
     {
