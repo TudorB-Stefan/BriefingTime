@@ -189,3 +189,4 @@
 /home/stephan/Desktop/BookPlace/BookPlace.Api/bin/Debug/net10.0/runtimes/win-x64/native/e_sqlite3.dll
 /home/stephan/Desktop/BookPlace/BookPlace.Api/bin/Debug/net10.0/runtimes/win-x86/native/e_sqlite3.dll
 /home/stephan/Desktop/BookPlace/BookPlace.Api/bin/Debug/net10.0/runtimes/win/lib/net9.0/System.Windows.Extensions.dll
+/home/stephan/Desktop/BookPlace/BookPlace.Api/bin/Debug/net10.0/Scalar.AspNetCore.dll
