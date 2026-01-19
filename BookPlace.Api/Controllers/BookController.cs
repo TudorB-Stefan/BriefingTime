@@ -54,4 +54,18 @@ public class BookController(AppDbContext context, IWebHostEnvironment environmen
         if (bookDto == null) return NotFound();
         return Ok(bookDto);
     }
+    [HttpPost("upload-book")]
+    public async Task<ActionResult> UploadBook(BookCreateDto createBookDto)
+    {
+        if (createBookDto.File == null || createBookDto.File.Length == 0) return BadRequest("No file uploaded!");
+        var allowedExtensions = new[] {".pdf",".enum"};
+        
+        string uploadFolder = Path.Combine(environment.WebRootPath,"uploads");
+        if(!Directory.Exists(uploadFolder)) Directory.CreateDirectory(uploadFolder);
+        string fileId = Guid.NewGuid().ToString() + Path.GetExtension(createBookDto.File.FileName);
+        string filePath = Path.Combine(uploadFolder,fileId);
+        using(var fileStream = new FileStream(filePath, FileMode.Create))
+            await createBookDto.File.CopyToAsync(fileStream);
+        return Ok();
+    }
 }

@@ -4365,19 +4365,19 @@
     ]
   },
   "packageFolders": {
-    "/home/stephan/.nuget/packages/": {}
+    "C:\\Users\\tudor\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/stephan/Desktop/BookPlace/BookPlace.Infrastructure/BookPlace.Infrastructure.csproj",
+      "projectUniqueName": "C:\\Users\\tudor\\Desktop\\BookPlaceDotNet\\BookPlace.Infrastructure\\BookPlace.Infrastructure.csproj",
       "projectName": "BookPlace.Infrastructure",
-      "projectPath": "/home/stephan/Desktop/BookPlace/BookPlace.Infrastructure/BookPlace.Infrastructure.csproj",
-      "packagesPath": "/home/stephan/.nuget/packages/",
-      "outputPath": "/home/stephan/Desktop/BookPlace/BookPlace.Infrastructure/obj/",
+      "projectPath": "C:\\Users\\tudor\\Desktop\\BookPlaceDotNet\\BookPlace.Infrastructure\\BookPlace.Infrastructure.csproj",
+      "packagesPath": "C:\\Users\\tudor\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\tudor\\Desktop\\BookPlaceDotNet\\BookPlace.Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/stephan/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\tudor\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
@@ -4389,8 +4389,8 @@
         "net10.0": {
           "targetAlias": "net10.0",
           "projectReferences": {
-            "/home/stephan/Desktop/BookPlace/BookPlace.Core/BookPlace.Core.csproj": {
-              "projectPath": "/home/stephan/Desktop/BookPlace/BookPlace.Core/BookPlace.Core.csproj"
+            "C:\\Users\\tudor\\Desktop\\BookPlaceDotNet\\BookPlace.Core\\BookPlace.Core.csproj": {
+              "projectPath": "C:\\Users\\tudor\\Desktop\\BookPlaceDotNet\\BookPlace.Core\\BookPlace.Core.csproj"
             }
           }
         }
@@ -4441,18 +4441,12 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[10.0.0, 10.0.0]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.NETCore.App": {
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/10.0.100/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.102/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",
