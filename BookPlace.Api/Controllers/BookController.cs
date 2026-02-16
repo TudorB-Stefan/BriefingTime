@@ -68,4 +68,9 @@ public class BookController(AppDbContext context, IWebHostEnvironment environmen
             await createBookDto.File.CopyToAsync(fileStream);
         return Ok();
     }
+    [HttpPut("edit-book-{id}")]
+    public async Task<ActionResult> EditBook(BookUpdateDto bookUpdateDto)
+    {
+        if()
+    }
 }
