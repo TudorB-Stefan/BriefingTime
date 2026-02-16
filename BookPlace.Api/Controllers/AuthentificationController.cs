@@ -45,9 +45,16 @@ public class AuthentificationController(AppDbContext context,UserManager<User> u
     {
         var user = await userManager.FindByEmailAsync(loginDto.Email);
         if(user == null) return Unauthorized("Invalid email or password.");
+        
         var res = await userManager.CheckPasswordAsync(user,loginDto.Password);
         if (!res) return Unauthorized("Invalid email or password.");
-        return Ok(await user.ToDto(tokenService));
+        
+        var refreshToken = tokenService.GenerateRefreshToken();
+        user.RefreshToken = refreshToken;
+        user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(2);
+        await userManager.UpdateAsync(user);
+        
+        return Ok(await user.ToDto(tokenService,refreshToken));
     }
 
 }

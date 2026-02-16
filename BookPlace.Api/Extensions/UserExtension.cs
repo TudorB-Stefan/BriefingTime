@@ -6,11 +6,12 @@ namespace CloudMight.API.Extensions;
 
 public static class UserExtension
 {
-    public static async Task<AuthResponseDto> ToDto(this User user, ITokenService tokenService)
+    public static async Task<AuthResponseDto> ToDto(this User user, ITokenService tokenService, string refreshToken)
     {
         return new AuthResponseDto
         {
-            RefreshToken = await tokenService.CreateToken(user),
+            Token = await tokenService.CreateToken(user),
+            RefreshToken = refreshToken,
             RefreshTokenExpiry = DateTime.UtcNow.AddDays(2),
             SelfDto = new SelfDto
             {
