@@ -5,6 +5,7 @@ using BookPlace.Infrastructure.Data;
 using CloudMight.API.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookPlace.Api.Controllers;
 
@@ -43,7 +44,12 @@ public class AuthentificationController(AppDbContext context,UserManager<User> u
     [HttpPost("login")]
     public async Task<ActionResult<AuthResponseDto>> Login([FromBody] LoginDto loginDto)
     {
-        var user = await userManager.FindByEmailAsync(loginDto.Email);
+        var user = await context.Users
+            .Include(u => u.UploadedBooks)
+            .Include(u => u.DownloadLogs).ThenInclude(d => d.Book)
+            .Include(u => u.FavoriteBooks).ThenInclude(f => f.Book)
+            .Include(u => u.Reviews)
+            .FirstOrDefaultAsync(u => u.NormalizedEmail == loginDto.Email.ToUpper());
         if(user == null) return Unauthorized("Invalid email or password.");
         
         var res = await userManager.CheckPasswordAsync(user,loginDto.Password);
