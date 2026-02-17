@@ -64,4 +64,30 @@ public class AuthController(AppDbContext context,UserManager<User> userManager,I
         return Ok(await user.ToDto(tokenService,refreshToken));
     }
 
+    [HttpPost("refresh-token")]
+    public async Task<ActionResult<AuthResponseDto>> RefreshToken([FromBody] RefreshTokenDto dto)
+    {
+        var user = await context.Users.Include(u => u.UploadedBooks) // Include these so user.ToDto() doesn't return empty arrays!
+            .Include(u => u.DownloadLogs).ThenInclude(d => d.Book)
+            .Include(u => u.FavoriteBooks).ThenInclude(f => f.Book)
+            .Include(u => u.Reviews)
+            .FirstOrDefaultAsync(u => u.RefreshToken == dto.RefreshToken);
+        if (user == null)
+            return Unauthorized();
+        if (user.RefreshTokenExpiry < DateTime.UtcNow)
+        {
+            user.RefreshToken = null;
+            user.RefreshTokenExpiry = null;
+            await context.SaveChangesAsync();
+            return Unauthorized();
+        }
+
+        var newRefreshToken = tokenService.GenerateRefreshToken();
+        user.RefreshToken = newRefreshToken;
+        user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(2);
+
+        await userManager.UpdateAsync(user);
+
+        return Ok(await user.ToDto(tokenService,newRefreshToken));
+    }
 }
