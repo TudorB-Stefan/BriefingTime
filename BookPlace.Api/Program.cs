@@ -3,6 +3,7 @@ using System.Text;
 using BookPlace.Core.Entities;
 using BookPlace.Core.Interfaces;
 using BookPlace.Infrastructure.Data;
+using BookPlace.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddCors();
-builder.Services.AddScoped<ITokenService, ITokenService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddDbContext<AppDbContext>(opt =>
 {
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));

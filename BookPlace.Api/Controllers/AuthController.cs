@@ -1,4 +1,5 @@
 using BookPlace.Api.DTOs;
+using BookPlace.Api.DTOs.AuthDtos;
 using BookPlace.Core.Entities;
 using BookPlace.Core.Interfaces;
 using BookPlace.Infrastructure.Data;
@@ -9,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookPlace.Api.Controllers;
 
-public class AuthentificationController(AppDbContext context,UserManager<User> userManager,ITokenService tokenService) : BaseController
+public class AuthController(AppDbContext context,UserManager<User> userManager,ITokenService tokenService) : BaseController
 {
     [HttpPost("register")]
     public async Task<ActionResult> Register([FromBody] RegisterDto registerDto)

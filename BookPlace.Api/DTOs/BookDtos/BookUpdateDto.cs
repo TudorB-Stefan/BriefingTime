@@ -4,7 +4,6 @@ namespace BookPlace.Api.DTOs;
 
 public class BookUpdateDto
 {
-    [Required]
     [Required] public string Title { get; set; }
     [Required] public string Author { get; set; }
     public string? Description { get; set; }

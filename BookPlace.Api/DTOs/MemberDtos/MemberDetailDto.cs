@@ -1,4 +1,4 @@
-namespace BookPlace.Api.DTOs;
+namespace BookPlace.Api.DTOs.MemberDtos;
 
 public class MemberDetailDto
 {

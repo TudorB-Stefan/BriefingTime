@@ -1,6 +1,6 @@
 ﻿namespace BookPlace.Api.DTOs;
 
-public class UserUpdateDto
+public class SelfUpdateDto
 {
     public string? Email { get; set; }
     public string? UserName { get; set; }

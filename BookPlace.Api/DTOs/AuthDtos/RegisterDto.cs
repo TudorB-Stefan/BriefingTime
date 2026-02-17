@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace BookPlace.Api.DTOs;
+namespace BookPlace.Api.DTOs.AuthDtos;
 
 public class RegisterDto
 {
@@ -11,8 +11,9 @@ public class RegisterDto
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     [Required]
-    public string Password { get; set; }
+    public string Password { get; set; } = string.Empty;
+
     [Required]
     [Compare("Password", ErrorMessage = "Passwords do not match")]
-    public string ConfirmaPassword { get; set; }
+    public string ConfirmPassword { get; set; } = string.Empty;
 }
