@@ -11,3 +11,26 @@
 # Datasource local storage ignored files
 /dataSources/
 /dataSources.local.xml
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+# VS Code files
+.vscode/
+# Build results
+[Bb]in/
+[Oo]bj/
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.tooling
+_i
+_y
+
+# OS generated files
+.DS_Store
+Thumbs.db
