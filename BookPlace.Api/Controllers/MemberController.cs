@@ -1,6 +1,8 @@
-﻿namespace BookPlace.Api.Controllers;
+﻿using BookPlace.Core.Interfaces.Repositories;
 
-public class MemberController
+namespace BookPlace.Api.Controllers;
+
+public class MemberController(IMemberRepository memberRepository) : BaseController
 {
     
 }
