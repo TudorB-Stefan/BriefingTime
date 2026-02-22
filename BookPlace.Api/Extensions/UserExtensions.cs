@@ -1,6 +1,8 @@
 using System.Security.Claims;
 using BookPlace.Api.DTOs;
 using BookPlace.Api.DTOs.AuthDtos;
+using BookPlace.Api.DTOs.MemberDtos;
+using BookPlace.Api.Extensions;
 using BookPlace.Core.Entities;
 using BookPlace.Core.Interfaces;
 using BookPlace.Infrastructure.Data;
@@ -63,6 +65,31 @@ public static class UserExtensions
             RefreshToken = refreshToken,
             RefreshTokenExpiry = DateTime.UtcNow.AddDays(2),
             SelfDto = ToSelfDto(user)
+        };
+    }
+    public static async Task<MemberDetailDto> ToDetailDto(this User user)
+    {
+        return new MemberDetailDto
+        {
+            Id = user.Id,
+            UserName = user.UserName,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            CreatedAt = user.CreatedAt,
+            ModifiedAt = user.ModifiedAt,
+            UploadedBooks = user.UploadedBooks.Select(b => b.ToListDto()).ToList()
+        };
+    }
+    public static async Task<MemberListDto> ToListDto(this User user)
+    {
+        return new MemberListDto
+        {
+            Id = user.Id,
+            UserName = user.UserName,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            CreatedAt = user.CreatedAt,
+            ModifiedAt = user.ModifiedAt
         };
     }
 }

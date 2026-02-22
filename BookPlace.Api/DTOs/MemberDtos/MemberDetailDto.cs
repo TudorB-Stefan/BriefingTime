@@ -2,6 +2,7 @@ namespace BookPlace.Api.DTOs.MemberDtos;
 
 public class MemberDetailDto
 {
+    public string Id { get; set; }
     public string UserName { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
