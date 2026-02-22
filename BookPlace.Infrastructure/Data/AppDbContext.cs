@@ -28,5 +28,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : IdentityDbCo
             .HasForeignKey(f => f.BookId);
         builder.Entity<DownloadLog>()
             .HasIndex(d => d.UserId);
+        builder.Entity<Review>()
+            .HasOne(r => r.User)
+            .WithMany(u => u.Reviews)
+            .HasForeignKey(r => r.UserId)
+            .OnDelete(DeleteBehavior.Restrict);
     }
 }

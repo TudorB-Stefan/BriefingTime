@@ -2,13 +2,14 @@ using BookPlace.Api.DTOs;
 using BookPlace.Api.Extensions;
 using BookPlace.Core.Entities;
 using BookPlace.Core.Interfaces.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookPlace.Api.Controllers;
 
 public class CategoryController(ICategoryRepository categoryRepository) : BaseController
 {
-    [HttpGet("get-all")]
+    [HttpGet]
     public async Task<ActionResult<IEnumerable<CategoryListDto>>> GetAll()
     {
         var categories = await categoryRepository.GetAllAsync();
@@ -25,9 +26,12 @@ public class CategoryController(ICategoryRepository categoryRepository) : BaseCo
         return Ok(categoryDto);
     }
 
+    [Authorize]
     [HttpPost]
     public async Task<ActionResult> CreateCategory(CategoryCreateDto dto)
     {
+        var userId = User.GetUserId();
+        if (userId == null) return Unauthorized();
         var category = new Category
         {
             Id = Guid.NewGuid().ToString(),
@@ -36,10 +40,12 @@ public class CategoryController(ICategoryRepository categoryRepository) : BaseCo
         await categoryRepository.AddAsync(category);
         return Ok();
     }
-
+    [Authorize]
     [HttpDelete("{id}")]
     public async Task<ActionResult> DeleteCategory(string id)
     {
+        var userId = User.GetUserId();
+        if (userId == null) return Unauthorized();
         var category = await categoryRepository.GetByIdAsync(id);
         if (category == null) return NotFound();
         await categoryRepository.DeleteAsync(category);

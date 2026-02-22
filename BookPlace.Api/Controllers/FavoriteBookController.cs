@@ -2,6 +2,7 @@ using BookPlace.Api.DTOs;
 using BookPlace.Api.Extensions;
 using BookPlace.Core.Entities;
 using BookPlace.Core.Interfaces.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookPlace.Api.Controllers;
@@ -32,11 +33,19 @@ public class FavoriteBookController(IFavoriteBookRepository favoriteBookReposito
         return Ok(favBookDto);
     }
 
+    [Authorize]
     [HttpPost]
+
     public async Task<ActionResult> CreateFavBook(FavoriteBookCreateDto dto)
     {
         var userId = User.GetUserId();
+        if (userId == null) return Unauthorized();
+        
         var book = await bookRepository.GetByIdAsync(dto.BookId);
+        if (book == null) return NotFound();
+
+        var existingFav = await favoriteBookRepository.GetByIdAsync(userId, dto.BookId);
+        if (existingFav != null) return BadRequest("You already favorited this book.");
 
         var favBook = new FavoriteBook
         {
@@ -45,6 +54,18 @@ public class FavoriteBookController(IFavoriteBookRepository favoriteBookReposito
             BookId = dto.BookId
         };
         await favoriteBookRepository.AddAsync(favBook);
+        return Ok();
+    }
+
+    [Authorize]
+    [HttpDelete("{bookId}")]
+    public async Task<ActionResult> DeleteFavBook(string bookId)
+    {
+        var userId = User.GetUserId();
+        if (userId == null) return Unauthorized();
+        var book = await favoriteBookRepository.GetByIdAsync(userId,bookId);
+        if (book == null) return NotFound();
+        await favoriteBookRepository.DeleteAsync(book);
         return Ok();
     }
 }

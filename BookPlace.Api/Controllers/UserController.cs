@@ -3,7 +3,6 @@ using BookPlace.Api.DTOs;
 using BookPlace.Api.Extensions;
 using BookPlace.Core.Entities;
 using BookPlace.Infrastructure.Data;
-using CloudMight.API.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,12 +11,12 @@ using Microsoft.EntityFrameworkCore;
 namespace BookPlace.Api.Controllers;
 
 [Authorize]
-public class UserController(AppDbContext context,UserManager<User> userManager) : BaseController
+public class UserController(UserManager<User> userManager) : BaseController
 {
     [HttpGet("me")]
     public async Task<ActionResult<SelfDto>> GetMyProfile()
     {
-        var user = await context.GetLoggedInUser(User);
+        var user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound();
         return Ok(user.ToSelfDto());
     }
@@ -25,13 +24,13 @@ public class UserController(AppDbContext context,UserManager<User> userManager) 
     [HttpPut("edit-me")]
     public async Task<ActionResult> EditMyProfile([FromBody]SelfUpdateDto selfUpdateDto)
     {
-        var user = await context.GetLoggedInUser(User);
+        var user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound();
         user.Email = selfUpdateDto.Email ?? user.Email;
         user.UserName = selfUpdateDto.UserName ?? user.UserName;
         user.FirstName = selfUpdateDto.FirstName ?? user.FirstName;
         user.LastName = selfUpdateDto.LastName ?? user.LastName;
-        user.ModifiedAt = DateTime.Now;
+        user.ModifiedAt = DateTime.UtcNow;
         var res = await userManager.UpdateAsync(user);
         if (!res.Succeeded)
             return BadRequest(res.Errors.Select(e => e.Description));
@@ -41,7 +40,7 @@ public class UserController(AppDbContext context,UserManager<User> userManager) 
     [HttpDelete("delete-me")]
     public async Task<ActionResult> DeleteMyProfile()
     {
-        var user = await context.GetLoggedInUser(User);
+        var user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound();
         var res = await userManager.DeleteAsync(user);
         if(!res.Succeeded)
@@ -52,7 +51,7 @@ public class UserController(AppDbContext context,UserManager<User> userManager) 
     [HttpPut("change-password")]
     public async Task<ActionResult> ChangePassword(ChangePasswordDto changePasswordDto)
     {
-        var user = await context.GetLoggedInUser(User);
+        var user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound();
         var res = await userManager.ChangePasswordAsync(user, changePasswordDto.OldPassword,
             changePasswordDto.Password);

@@ -1,14 +1,10 @@
-using System.Security.Claims;
 using BookPlace.Api.DTOs;
 using BookPlace.Api.DTOs.AuthDtos;
 using BookPlace.Api.DTOs.MemberDtos;
-using BookPlace.Api.Extensions;
 using BookPlace.Core.Entities;
 using BookPlace.Core.Interfaces;
-using BookPlace.Infrastructure.Data;
-using Microsoft.EntityFrameworkCore;
 
-namespace CloudMight.API.Extensions;
+namespace BookPlace.Api.Extensions;
 
 public static class UserExtensions
 {
@@ -40,8 +36,8 @@ public static class UserExtensions
             FavoriteBooks = user.FavoriteBooks?.Select(fbook => new FavoriteBookListDto
             {
                 BookId = fbook.BookId,
-                BookTitle = fbook.Book.Title,
-                Author = fbook.Book.Author,
+                BookTitle = fbook.Book.Title ?? "Unknown title",
+                Author = fbook.Book.Author ?? "Unknown author",
                 CreatedAt = fbook.CreatedAt
             }).ToList() ?? new List<FavoriteBookListDto>(),
             Reviews = user.Reviews?.Select(r => new ReviewDetailDto
@@ -67,7 +63,7 @@ public static class UserExtensions
             SelfDto = ToSelfDto(user)
         };
     }
-    public static async Task<MemberDetailDto> ToDetailDto(this User user)
+    public static MemberDetailDto ToDetailDto(this User user)
     {
         return new MemberDetailDto
         {
@@ -80,7 +76,7 @@ public static class UserExtensions
             UploadedBooks = user.UploadedBooks.Select(b => b.ToListDto()).ToList()
         };
     }
-    public static async Task<MemberListDto> ToListDto(this User user)
+    public static MemberListDto ToListDto(this User user)
     {
         return new MemberListDto
         {

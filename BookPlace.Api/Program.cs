@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -42,6 +43,7 @@ builder.Services.AddIdentityCore<User>(opt =>
 })
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<AppDbContext>();
+
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]);
 builder.Services.AddAuthentication(options =>
@@ -63,14 +65,11 @@ builder.Services.AddAuthentication(options =>
         };
     });    
 
-builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
-    app.MapScalarApiReference();
-    app.MapOpenApi();
 }
  
 app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials()
@@ -78,6 +77,6 @@ app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().AllowCredentials()
 app.UseHttpsRedirection();
 app.UseAuthentication(); 
 app.UseAuthorization();
-app.UseAuthorization();
+app.UseStaticFiles();
 app.MapControllers();
 app.Run();

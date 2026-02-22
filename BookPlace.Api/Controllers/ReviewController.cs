@@ -3,6 +3,7 @@ using BookPlace.Api.Extensions;
 using BookPlace.Core.Entities;
 using BookPlace.Core.Interfaces.Repositories;
 using BookPlace.Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -44,6 +45,7 @@ public class ReviewController(IReviewRepository reviewRepository,IBookRepository
     }
 
     [HttpPost]
+    [Authorize]
     public async Task<ActionResult> CreateReview(ReviewCreateDto dto)
     {
         var book = await bookRepository.GetByIdAsync(dto.BookId);
@@ -64,7 +66,8 @@ public class ReviewController(IReviewRepository reviewRepository,IBookRepository
         return Ok();
     }
 
-    [HttpPut]
+    [HttpPut("{id}")]
+    [Authorize]
     public async Task<ActionResult> UpdateReview(string id,ReviewUpdateDto dto)
     {
         var userId = User.GetUserId();
@@ -79,11 +82,13 @@ public class ReviewController(IReviewRepository reviewRepository,IBookRepository
         return Ok();
     }
 
-    [HttpDelete]
+    [HttpDelete("{id}")]
+    [Authorize]
     public async Task<ActionResult> DeleteReview(string id)
     {
         var review = await reviewRepository.GetByIdAsync(id);
         if (review == null) return NotFound();
+        if (review.UserId != User.GetUserId()) return Forbid("You can only edit your own reviews.");
         await reviewRepository.DeleteAsync(review);
         return Ok();
     }

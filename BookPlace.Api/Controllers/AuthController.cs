@@ -1,9 +1,9 @@
 using BookPlace.Api.DTOs;
 using BookPlace.Api.DTOs.AuthDtos;
+using BookPlace.Api.Extensions;
 using BookPlace.Core.Entities;
 using BookPlace.Core.Interfaces;
 using BookPlace.Infrastructure.Data;
-using CloudMight.API.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -45,12 +45,7 @@ public class AuthController(AppDbContext context,UserManager<User> userManager,I
     [HttpPost("login")]
     public async Task<ActionResult<AuthResponseDto>> Login([FromBody] LoginDto loginDto)
     {
-        var user = await context.Users
-            .Include(u => u.UploadedBooks)
-            .Include(u => u.DownloadLogs).ThenInclude(d => d.Book)
-            .Include(u => u.FavoriteBooks).ThenInclude(f => f.Book)
-            .Include(u => u.Reviews)
-            .FirstOrDefaultAsync(u => u.NormalizedEmail == loginDto.Email.ToUpper());
+        var user = await userManager.FindByEmailAsync(loginDto.Email);
         if(user == null) return Unauthorized("Invalid email or password.");
         
         var res = await userManager.CheckPasswordAsync(user,loginDto.Password);
@@ -67,11 +62,7 @@ public class AuthController(AppDbContext context,UserManager<User> userManager,I
     [HttpPost("refresh-token")]
     public async Task<ActionResult<AuthResponseDto>> RefreshToken([FromBody] RefreshTokenDto dto)
     {
-        var user = await context.Users.Include(u => u.UploadedBooks) // Include these so user.ToDto() doesn't return empty arrays!
-            .Include(u => u.DownloadLogs).ThenInclude(d => d.Book)
-            .Include(u => u.FavoriteBooks).ThenInclude(f => f.Book)
-            .Include(u => u.Reviews)
-            .FirstOrDefaultAsync(u => u.RefreshToken == dto.RefreshToken);
+        var user = await userManager.Users.FirstOrDefaultAsync(u => u.RefreshToken == dto.RefreshToken);
         if (user == null)
             return Unauthorized();
         if (user.RefreshTokenExpiry < DateTime.UtcNow)

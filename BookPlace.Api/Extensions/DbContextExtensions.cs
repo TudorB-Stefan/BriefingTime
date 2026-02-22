@@ -1,7 +1,6 @@
 ﻿using System.Security.Claims;
 using BookPlace.Core.Entities;
 using BookPlace.Infrastructure.Data;
-using CloudMight.API.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace BookPlace.Api.Extensions;
