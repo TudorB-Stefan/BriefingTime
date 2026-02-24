@@ -14,11 +14,15 @@ public class MemberRepository(AppDbContext context) : IMemberRepository
 
     public async Task<User?> GetByIdAsync(string id)
     {
-        return await context.Users.FindAsync(id);
+        return await context.Users
+            .Include(u => u.UploadedBooks)
+            .FirstOrDefaultAsync(u => u.Id == id);
     }
 
     public async Task<User?> GetByUsername(string username)
     {
-        return await context.Users.FirstOrDefaultAsync(u => u.UserName == username);
+        return await context.Users
+            .Include(u => u.UploadedBooks)
+            .FirstOrDefaultAsync(u => u.UserName == username);
     }
 }

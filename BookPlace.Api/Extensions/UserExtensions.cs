@@ -73,7 +73,7 @@ public static class UserExtensions
             LastName = user.LastName,
             CreatedAt = user.CreatedAt,
             ModifiedAt = user.ModifiedAt,
-            UploadedBooks = user.UploadedBooks.Select(b => b.ToListDto()).ToList()
+            UploadedBooks = user.UploadedBooks?.Select(b => b.ToListDto()).ToList()
         };
     }
     public static MemberListDto ToListDto(this User user)

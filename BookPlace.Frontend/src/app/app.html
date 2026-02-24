@@ -1,1 +1,7 @@
 <div>{{title}}</div>
+
+<ul>
+  @for (book of books(); track book.id) {
+    <li>{{book.id}} - {{book.userName}}</li>
+  }
+</ul>
