@@ -73,7 +73,7 @@ public class BookController(IWebHostEnvironment environment,IBookRepository book
             CreatedAt = DateTime.UtcNow,
             ModifiedAt = DateTime.UtcNow,
             CategoryId = dto.CategoryId,
-            UserId = User.GetUserId(),
+            UserId = User.GetUserId()
         };
         await bookRepository.AddAsync(book);
         return Ok();

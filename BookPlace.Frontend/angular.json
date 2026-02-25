@@ -8,7 +8,26 @@
   "projects": {
     "BookPlace.Frontend": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:guard": {
+          "skipTests": true,
+          "path": "src/app/core/guards"
+        },
+        "@schematics/angular:service": {
+          "skipTests": true,
+          "path": "src/app/core/services"
+        },
+        "@schematics/ang": {
+
+        },
+        "@schematics/angular:component": {
+          "skipTests": true,
+          "path": "src/app/shared/components"
+        },
+        "@schematics/angular:interface": {
+          "path": "src/app/shared/models"
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",

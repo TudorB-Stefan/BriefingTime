@@ -23,7 +23,7 @@ public static class CategoryExtensions
         {
             Id = category.Id,
             Name = category.Name,
-            Count = category.Books.Count()
+            Count = category.Books?.Count() ?? 0
         };
     }
 }
