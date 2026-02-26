@@ -1,5 +1,5 @@
 <Solution>
-  <Project Path="BookPlace.Api/BookPlace.Api.csproj" />
-  <Project Path="BookPlace.Core/BookPlace.Core.csproj" />
-  <Project Path="BookPlace.Infrastructure/BookPlace.Infrastructure.csproj" />
+  <Project Path="BriefingTime.Api\BriefingTime.Api.csproj" />
+  <Project Path="BriefingTime.Core\BriefingTime.Core.csproj" />
+  <Project Path="BriefingTime.Infrastructure\BriefingTime.Infrastructure.csproj" />
 </Solution>

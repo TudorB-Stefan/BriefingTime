@@ -1,17 +1,17 @@
 ﻿FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
-COPY ["BookPlace.Api/BookPlace.Api.csproj", "BookPlace.Api/"]
-COPY ["BookPlace.Core/BookPlace.Core.csproj", "BookPlace.Core/"]
-COPY ["BookPlace.Infrastructure/BookPlace.Infrastructure.csproj", "BookPlace.Infrastructure/"]
+COPY ["BriefingTime.Api/BriefingTime.Api.csproj", "BriefingTime.Api/"]
+COPY ["BriefingTime.Core/BriefingTime.Core.csproj", "BriefingTime.Core/"]
+COPY ["BriefingTime.Infrastructure/BriefingTime.Infrastructure.csproj", "BriefingTime.Infrastructure/"]
 
-RUN dotnet restore "BookPlace.Api/BookPlace.Api.csproj"
+RUN dotnet restore "BriefingTime.Api/BriefingTime.Api.csproj"
 
 COPY . .
-WORKDIR "/src/BookPlace.Api"
+WORKDIR "/src/BriefingTime.Api"
 RUN dotnet publish -c Release -o /app/publish
 
 FROM mcr.microsoft.com/dotnet/aspnet:10.0
 WORKDIR /app
 COPY --from=build /app/publish .
-ENTRYPOINT ["dotnet", "BookPlace.Api.dll"]
+ENTRYPOINT ["dotnet", "BriefingTime.Api.dll"]
