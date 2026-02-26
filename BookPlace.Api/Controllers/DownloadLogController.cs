@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookPlace.Api.Controllers;
 
-public class DownloadLogController(IDownloadLogRepository downloadLogRepository,IBookRepository bookRepository) : BaseController
+public class DownloadLogController(IDownloadLogRepository downloadLogRepository,IBriefingRepository briefingRepository) : BaseController
 {
     [HttpGet]
     public async Task<ActionResult<IEnumerable<DownloadLogDetailDto>>> GetAll()
@@ -32,14 +32,14 @@ public class DownloadLogController(IDownloadLogRepository downloadLogRepository,
     {
         var userId = User.GetUserId();
         if (userId == null) return Unauthorized();
-        var book = await bookRepository.GetByIdAsync(dto.BookId);
-        if (book == null) return NotFound("Book not found.");
+        var briefing = await briefingRepository.GetByIdAsync(dto.BriefingId);
+        if (briefing == null) return NotFound("Briefing not found.");
         var downloadLog = new DownloadLog
         {
             Id = Guid.NewGuid().ToString(),
             CreatedAt = DateTime.UtcNow,
             UserId = userId,
-            BookId = dto.BookId
+            BriefingId = dto.BriefingId
         };
         await downloadLogRepository.AddAsync(downloadLog);
         return Ok();

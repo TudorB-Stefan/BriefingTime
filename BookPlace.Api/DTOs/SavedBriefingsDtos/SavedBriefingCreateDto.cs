@@ -1,7 +1,6 @@
 namespace BookPlace.Api.DTOs;
 
-public class DownloadLogDetailDto
+public class SavedBriefingCreateDto
 {
     public string BriefingId { get; set; }
-    public string UserId { get; set; }
 }

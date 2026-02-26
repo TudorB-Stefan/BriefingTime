@@ -11,9 +11,9 @@ public static class DbContextExtensions
     {
         var userId = principal.GetUserId();
         return await context.Users
-            .Include(u => u.UploadedBooks)
-            .Include(u => u.Reviews)
-            .Include(u => u.FavoriteBooks)
+            .Include(u => u.UploadedBriefing)
+            .Include(u => u.Comments)
+            .Include(u => u.SavedBriefings)
             .FirstOrDefaultAsync(u => u.Id == userId);
     }
 }

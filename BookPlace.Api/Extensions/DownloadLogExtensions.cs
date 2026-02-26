@@ -10,7 +10,7 @@ public static class DownloadLogExtensions
         return new DownloadLogDetailDto
         {
             UserId = downloadLog.UserId,
-            BookId = downloadLog.BookId
+            BriefingId = downloadLog.BriefingId
         };
     }
 }

@@ -10,8 +10,8 @@ public class User : IdentityUser
     public DateTime? RefreshTokenExpiry { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime ModifiedAt { get; set; } = DateTime.UtcNow;
-    public ICollection<Book> UploadedBooks { get; set; }
+    public ICollection<Briefing> UploadedBriefing { get; set; }
     public ICollection<DownloadLog> DownloadLogs { get; set; }
-    public ICollection<Review> Reviews { get; set; }
-    public ICollection<FavoriteBook> FavoriteBooks { get; set; }
+    public ICollection<Comment> Comments { get; set; }
+    public ICollection<SavedBriefing> SavedBriefings { get; set; }
 }

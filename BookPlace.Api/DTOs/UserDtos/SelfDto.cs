@@ -9,8 +9,8 @@ public class SelfDto
     public string LastName { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime ModifiedAt { get; set; }
-    public ICollection<BookListDto> UploadedBooks { get; set; }
+    public ICollection<BriefingListDto> UploadedBriefings { get; set; }
     public ICollection<DownloadLogListDto> DownloadLogs { get; set; }
-    public ICollection<FavoriteBookListDto> FavoriteBooks { get; set; }
-    public ICollection<ReviewDetailDto> Reviews { get; set; }
+    public ICollection<SavedBriefingListDto> SavedBriefings { get; set; }
+    public ICollection<CommentDetailDto> Comments { get; set; }
 }

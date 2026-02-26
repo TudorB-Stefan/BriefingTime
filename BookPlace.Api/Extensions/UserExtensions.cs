@@ -19,38 +19,37 @@ public static class UserExtensions
             LastName = user.LastName,
             CreatedAt = user.CreatedAt,
             ModifiedAt = user.ModifiedAt,
-            UploadedBooks = user.UploadedBooks?.Select(b => new BookListDto
+            UploadedBriefings = user.UploadedBriefing?.Select(b => new BriefingListDto
             {
                 Id = b.Id,
                 Title = b.Title,
                 Author = b.Author,
-            }).ToList() ?? new List<BookListDto>(),
+            }).ToList() ?? new List<BriefingListDto>(),
             DownloadLogs = user.DownloadLogs?.Select(dlog => new DownloadLogListDto
             {
-                BookId = dlog.BookId,
-                BookTitle = dlog.Book?.Title ?? "Unknown title",
+                BriefingId = dlog.BriefingId,
+                BriefingTitle = dlog.Briefing?.Title ?? "Unknown title",
                 UserId = dlog.UserId,
                 UserName = dlog.User?.UserName ?? "Unknown username",
                 DownloadedAt = dlog.CreatedAt
             }).ToList() ?? new List<DownloadLogListDto>(),
-            FavoriteBooks = user.FavoriteBooks?.Select(fbook => new FavoriteBookListDto
+            SavedBriefings = user.SavedBriefings?.Select(fbook => new SavedBriefingListDto
             {
-                BookId = fbook.BookId,
-                BookTitle = fbook.Book.Title ?? "Unknown title",
-                Author = fbook.Book.Author ?? "Unknown author",
+                BriefingId = fbook.BriefingId,
+                BriefingTitle = fbook.Briefing.Title ?? "Unknown title",
+                Author = fbook.Briefing.Author ?? "Unknown author",
                 CreatedAt = fbook.CreatedAt
-            }).ToList() ?? new List<FavoriteBookListDto>(),
-            Reviews = user.Reviews?.Select(r => new ReviewDetailDto
+            }).ToList() ?? new List<SavedBriefingListDto>(),
+            Comments = user.Comments?.Select(r => new CommentDetailDto
             {
                 Id = r.Id,
-                Grade = r.Grade,
                 Title = r.Title,
                 Description = r.Description,
                 CreatedAt = r.CreatedAt,
                 UserName = r.User?.UserName ?? "Unknown username",
                 UserFirstName = r.User?.FirstName ?? "Unknown firstname",
                 UserLastName = r.User?.LastName ?? "Unknown lastname"
-            }).ToList() ?? new List<ReviewDetailDto>(),
+            }).ToList() ?? new List<CommentDetailDto>(),
         };
     }
     public static async Task<AuthResponseDto> ToDto(this User user, ITokenService tokenService, string refreshToken)
@@ -73,7 +72,7 @@ public static class UserExtensions
             LastName = user.LastName,
             CreatedAt = user.CreatedAt,
             ModifiedAt = user.ModifiedAt,
-            UploadedBooks = user.UploadedBooks?.Select(b => b.ToListDto()).ToList()
+            UploadedBriefings = user.UploadedBriefing?.Select(b => b.ToListDto()).ToList()
         };
     }
     public static MemberListDto ToListDto(this User user)
