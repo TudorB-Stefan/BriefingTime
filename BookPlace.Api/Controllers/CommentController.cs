@@ -46,7 +46,7 @@ public class CommentController(ICommentRepository commentRepository,IBriefingRep
 
     [HttpPost]
     [Authorize]
-    public async Task<ActionResult> CreateReview(CommentCreateDto dto)
+    public async Task<ActionResult> CreateComment(CommentCreateDto dto)
     {
         var briefing = await briefingRepository.GetByIdAsync(dto.BriefingId);
         var userId = User.GetUserId();
@@ -67,7 +67,7 @@ public class CommentController(ICommentRepository commentRepository,IBriefingRep
 
     [HttpPut("{id}")]
     [Authorize]
-    public async Task<ActionResult> UpdateReview(string id,CommentUpdateDto dto)
+    public async Task<ActionResult> UpdateComment(string id,CommentUpdateDto dto)
     {
         var userId = User.GetUserId();
         if (userId == null) return NotFound("User not found");
@@ -82,7 +82,7 @@ public class CommentController(ICommentRepository commentRepository,IBriefingRep
 
     [HttpDelete("{id}")]
     [Authorize]
-    public async Task<ActionResult> DeleteReview(string id)
+    public async Task<ActionResult> DeleteComment(string id)
     {
         var comment = await commentRepository.GetByIdAsync(id);
         if (comment == null) return NotFound();

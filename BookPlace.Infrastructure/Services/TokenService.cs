@@ -16,7 +16,7 @@ public class TokenService(IConfiguration config,UserManager<User> userManager) :
     {
         var tokenKey = config["Jwt:Key"] ?? throw new Exception("TokenKey is missing");
         if (tokenKey.Length < 64)
-            throw new Exception("Invalid token key lenght");
+            throw new Exception("Invalid token key length");
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey));
         var claims = new List<Claim>
         {

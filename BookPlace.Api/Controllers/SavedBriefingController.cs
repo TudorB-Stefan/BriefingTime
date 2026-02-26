@@ -19,7 +19,7 @@ public class SavedBriefingController(ISavedBriefingRepository savedBriefingRepos
     [HttpGet("brief-{briefingId}")]
     public async Task<ActionResult<IEnumerable<SavedBriefingListDto>>> GetByBriefingId(string briefingId)
     {
-        var savedBriefing = await savedBriefingRepository.GetByBriefingAsync(briefingId);
+        var savedBriefing = await savedBriefingRepository.GetByBriefingsAsync(briefingId);
         var savedBriefingDto = savedBriefing.Select(s => s.ToListDto()).ToList();
         return Ok(savedBriefingDto);
     }
@@ -47,19 +47,19 @@ public class SavedBriefingController(ISavedBriefingRepository savedBriefingRepos
         var existingFav = await savedBriefingRepository.GetByIdAsync(userId, dto.BriefingId);
         if (existingFav != null) return BadRequest("You already saved this briefing.");
 
-        var favBook = new SavedBriefing
+        var savedBriefing = new SavedBriefing
         {
             CreatedAt = DateTime.UtcNow,
             UserId = userId,
             BriefingId = dto.BriefingId
         };
-        await savedBriefingRepository.AddAsync(favBook);
+        await savedBriefingRepository.AddAsync(savedBriefing);
         return Ok();
     }
 
     [Authorize]
     [HttpDelete("{briefingId}")]
-    public async Task<ActionResult> DeleteFavBook(string briefingId)
+    public async Task<ActionResult> DeleteSavedBriefing(string briefingId)
     {
         var userId = User.GetUserId();
         if (userId == null) return Unauthorized();

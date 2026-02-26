@@ -9,23 +9,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BookPlace.Api.Controllers;
 
-public class BriefingController(IWebHostEnvironment environment,IBriefingRepository briefingRepository,IMemberRepository memberRepository) : BaseController
+public class BriefingController(IWebHostEnvironment environment,IDepartmentRepository departmentRepository,IBriefingRepository briefingRepository,IMemberRepository memberRepository) : BaseController
 {
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<BriefingListDto>>> GetBriefingList()
     {
-        var books = await briefingRepository.GetAllAsync();
-        var booksDto = books.Select(b => b.ToListDto());
-        return Ok(booksDto); 
+        var briefings = await briefingRepository.GetAllAsync();
+        var briefingDto = briefings.Select(b => b.ToListDto());
+        return Ok(briefingDto); 
     }
     
     [HttpGet("{id}")]
     public async Task<ActionResult<BriefingDetailDto>> GetBriefingDetailById(string id)
     {
-        var book = await briefingRepository.GetByIdAsync(id);
-        if (book == null) return NotFound();
-        var bookDto = book.ToDetailDto();
-        return Ok(bookDto);
+        var briefing = await briefingRepository.GetByIdAsync(id);
+        if (briefing == null) return NotFound();
+        var briefingDto = briefing.ToDetailDto();
+        return Ok(briefingDto);
     }
 
     [Authorize]
@@ -34,9 +34,9 @@ public class BriefingController(IWebHostEnvironment environment,IBriefingReposit
     {
         var book = await briefingRepository.GetByIdAsync(id);
         if (book == null) return NotFound();
-        if (string.IsNullOrEmpty(book.FileUrl)) return NotFound("Invalid book file path.");
+        if (string.IsNullOrEmpty(book.FileUrl)) return NotFound("Invalid briefing file path.");
         string filePath = Path.Combine(environment.WebRootPath, "uploads", book.FileUrl);
-        if(!System.IO.File.Exists(filePath)) return NotFound("Corrupted book file.");
+        if(!System.IO.File.Exists(filePath)) return NotFound("Corrupted briefing file.");
         string contentType = book.ContentType ?? "application/octet-stream";
         string downloadName = book.OriginalFileName ?? book.FileUrl;
         return PhysicalFile(filePath, contentType, downloadName);
@@ -59,11 +59,14 @@ public class BriefingController(IWebHostEnvironment environment,IBriefingReposit
         
         using(var fileStream = new FileStream(filePath, FileMode.Create))
             await dto.File.CopyToAsync(fileStream);
-        var author = memberRepository.GetByIdAsync(User.GetUserId()).Result;
-        if(author==null) 
-            return BadRequest("Invalid user.");
         
-        var book = new Briefing
+        var userId = User.GetUserId();
+        var author = await memberRepository.GetByIdAsync(userId);
+        
+        var department = await departmentRepository.GetByIdAsync(dto.DepartmentId);
+        if(department == null) return NotFound("Department not found.");
+        
+        var briefing = new Briefing
         {
             Id = Guid.NewGuid().ToString(),
             Title = dto.Title,
@@ -74,11 +77,12 @@ public class BriefingController(IWebHostEnvironment environment,IBriefingReposit
             FileSizeBytes = dto.File.Length,
             ContentType = dto.File.ContentType,
             CreatedAt = DateTime.UtcNow,
+            ExpiresAt = DateTime.UtcNow.AddHours(1),
             ModifiedAt = DateTime.UtcNow,
             DepartmentId = dto.DepartmentId,
-            UserId = User.GetUserId()
+            UserId = userId
         };
-        await briefingRepository.AddAsync(book);
+        await briefingRepository.AddAsync(briefing);
         return Ok();
     }
 
@@ -88,7 +92,7 @@ public class BriefingController(IWebHostEnvironment environment,IBriefingReposit
     {
         var briefing = await briefingRepository.GetByIdAsync(id);
         if (briefing == null) return NotFound();
-        if (briefing.UserId != User.GetUserId()) return Forbid("You can only delete your own books.");
+        if (briefing.UserId != User.GetUserId()) return Forbid("You can only edit your own briefings.");
 
         briefing.Title = dto.Title ?? briefing.Title;
         briefing.Description = dto.Description ?? briefing.Description;
@@ -106,8 +110,15 @@ public class BriefingController(IWebHostEnvironment environment,IBriefingReposit
     {
         var briefing = await briefingRepository.GetByIdAsync(id);
         if (briefing == null) return NotFound();
-        if (briefing.UserId != User.GetUserId()) return Forbid("You can only delete your own books.");
-        
+        if (briefing.UserId != User.GetUserId()) return Forbid("You can only delete your own briefings.");
+        if (!string.IsNullOrEmpty(briefing.FileUrl))
+        {
+            var filePath = Path.Combine(environment.WebRootPath, "uploads", briefing.FileUrl);
+            if (System.IO.File.Exists(filePath))
+            {
+                System.IO.File.Delete(filePath);
+            }
+        }
         await briefingRepository.DeleteAsync(briefing);
         return Ok();
     }

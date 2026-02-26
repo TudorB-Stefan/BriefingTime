@@ -9,7 +9,9 @@ public class BriefingRepository(AppDbContext context) : IBriefingRepository
 {
     public async Task<IEnumerable<Briefing>> GetAllAsync()
     {
-        return await context.Briefings.ToListAsync();
+        return await context.Briefings
+            .Where(b => b.ExpiresAt > DateTime.UtcNow)
+            .ToListAsync();
     }
 
     public async Task<Briefing?> GetByIdAsync(string id)
@@ -22,6 +24,7 @@ public class BriefingRepository(AppDbContext context) : IBriefingRepository
         return await context.Briefings
             .Include(b => b.Comments)
             .Include(b => b.SavedBriefings)
+            .Include(b => b.Department)
             .FirstOrDefaultAsync(b => b.Id == id);
     }
 

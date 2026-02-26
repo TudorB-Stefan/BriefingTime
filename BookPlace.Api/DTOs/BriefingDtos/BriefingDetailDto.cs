@@ -2,9 +2,12 @@ namespace BookPlace.Api.DTOs;
 
 public class BriefingDetailDto
 {
+    public string Id { get; set; }
     public string Title { get; set; }
     public string Author { get; set; }
     public string Description { get; set; }
+    public string DepartmentName { get; set; }
+    public DateTime ExpiresAt { get; set; }
     public long FileSizeByte { get; set; }
     public string FileUrl { get; set; } = string.Empty;
     public string ContentType { get; set; } = "application/pdf";
