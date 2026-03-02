@@ -17,6 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddCors();
+builder.Services.AddHostedService<BriefingCleanupService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IBriefingRepository, BriefingRepository>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
