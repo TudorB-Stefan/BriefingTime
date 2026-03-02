@@ -66,4 +66,7 @@ BriefingTime is a full-stack application designed for the management and distrib
 * **Database Name:** BriefingTimeDb
 * **Tool:** Use DBeaver or similar for schema visualization and manual queries.
 
+---
 
+## License
+This project is licensed under the **GPL-3.0 License**. See the `LICENSE` file for details.
