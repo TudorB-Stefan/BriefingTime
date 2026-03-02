@@ -50,13 +50,21 @@ public class AuthController(AppDbContext context,UserManager<User> userManager,I
         
         var res = await userManager.CheckPasswordAsync(user,loginDto.Password);
         if (!res) return Unauthorized("Invalid email or password.");
-        
+        var token = await tokenService.CreateToken(user);
         var refreshToken = tokenService.GenerateRefreshToken();
         user.RefreshToken = refreshToken;
         user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(2);
         await userManager.UpdateAsync(user);
-        
-        return Ok(await user.ToDto(tokenService,refreshToken));
+
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Strict,
+            Expires = DateTime.UtcNow.AddDays(2)
+        };
+        Response.Cookies.Append("auth_token",token,cookieOptions);
+        return Ok(await user.ToDto(token,refreshToken));
     }
 
     [HttpPost("refresh-token")]
@@ -78,7 +86,14 @@ public class AuthController(AppDbContext context,UserManager<User> userManager,I
         user.RefreshTokenExpiry = DateTime.UtcNow.AddDays(2);
 
         await userManager.UpdateAsync(user);
-
-        return Ok(await user.ToDto(tokenService,newRefreshToken));
+        var newToken = await tokenService.CreateToken(user);
+        Response.Cookies.Append("auth_token",newToken,new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Strict,
+            Expires = DateTime.UtcNow.AddDays(2)
+        });
+        return Ok(await user.ToDto(newToken,newRefreshToken));
     }
 }

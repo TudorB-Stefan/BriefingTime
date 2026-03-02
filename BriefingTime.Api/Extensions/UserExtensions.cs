@@ -52,13 +52,13 @@ public static class UserExtensions
             }).ToList() ?? new List<CommentDetailDto>(),
         };
     }
-    public static async Task<AuthResponseDto> ToDto(this User user, ITokenService tokenService, string refreshToken)
+    public static async Task<AuthResponseDto> ToDto(this User user, string token, string refreshToken)
     {
         return new AuthResponseDto
         {
-            Token = await tokenService.CreateToken(user),
+            Token = token,
             RefreshToken = refreshToken,
-            RefreshTokenExpiry = DateTime.UtcNow.AddDays(2),
+            RefreshTokenExpiry = user.RefreshTokenExpiry ?? DateTime.UtcNow,
             SelfDto = ToSelfDto(user)
         };
     }

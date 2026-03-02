@@ -16,7 +16,9 @@ public class BriefingRepository(AppDbContext context) : IBriefingRepository
 
     public async Task<Briefing?> GetByIdAsync(string id)
     {
-        return await context.Briefings.FindAsync(id);
+        return await context.Briefings
+            .Include(b => b.Department)
+            .FirstOrDefaultAsync(b=> b.Id == id);
     }
 
     public async Task<Briefing?> GetByIdWithDetailsAsync(string id)

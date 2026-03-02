@@ -11,7 +11,7 @@ import { Navbar } from "./shared/components/navbar/navbar";
 })
 export class App implements OnInit {
   private http = inject(HttpClient);
-  protected title = 'BookPlace';
+  protected title = 'BriefingTime';
   protected members = signal<any>([]);
 
   ngOnInit(): void {

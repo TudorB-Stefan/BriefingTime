@@ -11,7 +11,9 @@ public static class BriefingExtensions
         {
             Id = briefing.Id,
             Title = briefing.Title,
-            Author = briefing.Author
+            Author = briefing.Author,
+            DepartmentName = briefing.Department.Name,
+            ExpiresAt = briefing.ExpiresAt
         };
     }
 
@@ -22,6 +24,8 @@ public static class BriefingExtensions
             Title = briefing.Title,
             Author = briefing.Author,
             Description = briefing.Description,
+            DepartmentName = briefing.Department.Name,
+            ExpiresAt = briefing.ExpiresAt,
             FileSizeByte = briefing.FileSizeBytes,
             FileUrl = briefing.FileUrl,
             ContentType = briefing.ContentType,
