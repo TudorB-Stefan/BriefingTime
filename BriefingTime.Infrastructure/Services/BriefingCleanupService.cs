@@ -1,4 +1,5 @@
-﻿using BriefingTime.Infrastructure.Data;
+﻿using BriefingTime.Core.Interfaces.Repositories;
+using BriefingTime.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -15,15 +16,16 @@ public class BriefingCleanupService(IServiceScopeFactory scopeFactory, ILogger<B
             logger.LogInformation("Cleanup service run: {time}",DateTimeOffset.Now);
             using (var scope = scopeFactory.CreateScope())
             {
-                var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();var cutoffDate = DateTime.UtcNow.AddDays(-30);
-                var oldBriefings = await context.Briefings
-                    .Where(b => b.CreatedAt < cutoffDate)
-                    .ToListAsync(stoppingToken);
-                if (oldBriefings.Any())
+                var briefingRepository = scope.ServiceProvider.GetRequiredService<IBriefingRepository>();
+                var oldBriefings = await briefingRepository.GetOldBriefings();
+                var count = oldBriefings.Count();
+                if (count>0)
                 {
-                    context.Briefings.RemoveRange(oldBriefings);
-                    await context.SaveChangesAsync(stoppingToken);
-                    logger.LogInformation("Deleted {count} old briefings.", oldBriefings.Count);
+                    foreach (var oldBriefing in oldBriefings)
+                    {
+                        await briefingRepository.DeleteAsync(oldBriefing);
+                    }
+                    logger.LogInformation("Deleted {count} old briefings.", oldBriefings.Count());
                 }
             }
             await Task.Delay(TimeSpan.FromMinutes(10), stoppingToken);

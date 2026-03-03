@@ -10,4 +10,5 @@ public interface IBriefingRepository
     Task AddAsync(Briefing briefing);
     Task UpdateAsync(Briefing briefing);
     Task DeleteAsync(Briefing briefing);
+    Task<IEnumerable<Briefing>> GetOldBriefings();
 }

@@ -47,4 +47,12 @@ public class BriefingRepository(AppDbContext context) : IBriefingRepository
         context.Remove(briefing);
         await context.SaveChangesAsync();
     }
+
+    public async Task<IEnumerable<Briefing>> GetOldBriefings()
+    {
+        var oldBriefs = await context.Briefings
+            .Where(b => b.CreatedAt.AddHours(24) < DateTime.UtcNow)
+            .ToListAsync();
+        return oldBriefs;
+    }
 }
