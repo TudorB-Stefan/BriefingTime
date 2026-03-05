@@ -11,6 +11,7 @@ public class BriefingRepository(AppDbContext context) : IBriefingRepository
     {
         return await context.Briefings
             .Where(b => b.ExpiresAt > DateTime.UtcNow)
+            .Include(b => b.Department)
             .ToListAsync();
     }
 

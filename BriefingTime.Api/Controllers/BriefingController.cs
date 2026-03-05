@@ -15,7 +15,7 @@ public class BriefingController(IWebHostEnvironment environment,IDepartmentRepos
     public async Task<ActionResult<IReadOnlyList<BriefingListDto>>> GetBriefingList()
     {
         var briefings = await briefingRepository.GetAllAsync();
-        var briefingDto = briefings.Select(b => b.ToListDto());
+        var briefingDto = briefings.Select(b => b.ToListDto()).ToList();
         return Ok(briefingDto); 
     }
     

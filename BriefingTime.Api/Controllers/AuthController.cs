@@ -90,7 +90,7 @@ public class AuthController(AppDbContext context,UserManager<User> userManager,I
         Response.Cookies.Append("auth_token",newToken,new CookieOptions
         {
             HttpOnly = true,
-            Secure = true,
+            Secure = false,
             SameSite = SameSiteMode.Strict,
             Expires = DateTime.UtcNow.AddDays(2)
         });

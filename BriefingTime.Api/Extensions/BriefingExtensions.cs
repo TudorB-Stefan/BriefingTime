@@ -12,7 +12,7 @@ public static class BriefingExtensions
             Id = briefing.Id,
             Title = briefing.Title,
             Author = briefing.Author,
-            DepartmentName = briefing.Department.Name,
+            DepartmentName = briefing.Department?.Name ?? "No Department",
             ExpiresAt = briefing.ExpiresAt
         };
     }

@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Navbar } from "./shared/components/navbar/navbar";
+import { AuthService } from "./core/services/auth.service";
 
 @Component({
   selector: 'app-root',
@@ -13,12 +14,7 @@ export class App implements OnInit {
   private http = inject(HttpClient);
   protected title = 'BriefingTime';
   protected members = signal<any>([]);
+  authService = inject(AuthService);
 
-  ngOnInit(): void {
-    this.http.get('http://localhost:8080/api/Book').subscribe({
-      next: response => this.members.set(response),
-      error: error => console.log(error),
-      complete: () => console.log('Succes')
-    })
-  }
+  ngOnInit(): void {}
 }
