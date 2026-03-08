@@ -7,6 +7,7 @@ public interface IBriefingRepository
     Task<IEnumerable<Briefing>> GetAllAsync();
     Task<Briefing?> GetByIdAsync(string id);
     Task<Briefing?> GetByIdWithDetailsAsync(string id);
+    Task<IEnumerable<Briefing>> GetByUserId(string userId);
     Task AddAsync(Briefing briefing);
     Task UpdateAsync(Briefing briefing);
     Task DeleteAsync(Briefing briefing);

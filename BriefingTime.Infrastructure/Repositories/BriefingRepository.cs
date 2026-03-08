@@ -31,6 +31,14 @@ public class BriefingRepository(AppDbContext context) : IBriefingRepository
             .FirstOrDefaultAsync(b => b.Id == id);
     }
 
+    public async Task<IEnumerable<Briefing>> GetByUserId(string userId)
+    {
+        return await context.Briefings
+            .Where(b => b.UserId == userId)
+            .Include(b => b.Department)
+            .ToListAsync();
+    }
+
     public async Task AddAsync(Briefing briefing)
     {
         await context.Briefings.AddAsync(briefing);
