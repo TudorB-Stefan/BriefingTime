@@ -1,1 +1,43 @@
-<p>briefing-create works!</p>
+<div class="flex justify-center text-3xl w-full h-full p-10 space-y-10">
+  <div>
+    <div class="font-bold mb-15">Create Briefing:</div>
+    <form #loginForm="ngForm" (ngSubmit)="submitBriefing()" class="mb-15 px-10">
+      <div class="flex w-full h-full">
+        <div class="mb-5 space-x-10 space-y-5 mr-5">
+          <p>Title </p>
+          <p>Description </p>
+          <p>Department </p>
+          <p>File </p>
+        </div>
+        <div class="space-x-10 space-y-5">
+          <input
+            [(ngModel)]="creds.title"
+            type="text"
+            name="Title"
+            class="w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/60"
+            placeholder="Title">
+          <input
+            [(ngModel)]="creds.description"
+            type="text"
+            name="Description"
+            class="w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/60"
+            placeholder="Description">
+          <input
+            [(ngModel)]="creds.departmentId"
+            type="text"
+            name="DepartmentId"
+            class="w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/60"
+            placeholder="Department Name">
+          <input
+            (change)="onFileSelected($event)"
+            accept=".pdf"
+            name="File"
+            type="file"
+            class="w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/60"
+            placeholder="File">
+        </div>
+      </div>
+      <button type="submit" class="bg-zinc-500 rounded-full p-2 text-zinc-300 shadow-3xl hover:text-zinc-200 hover:bg-zinc-600">Submit</button>
+    </form>
+  </div>
+</div>

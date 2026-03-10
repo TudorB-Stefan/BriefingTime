@@ -24,15 +24,15 @@
          class="text-center py-2 rounded-4xl cursor-pointer transition-all duration-200">
         Downloads
       </a>
-      <div class="mt-8 p-5">
+      <div class="col-span-3 mt-8 p-5 w-full">
         @switch (activeTab()) {
           @case ('publishings') {
             <div class="animate-fade-in">
-              <app-my-briefings-component/>
+              <app-my-briefings-component class="block w-full"/>
             </div>
           }
           @case ('saved') {
-            <div class="animate-fade-in">
+            <div class="animate-fade-in w-full">
               <app-my-saved-component/>
             </div>
           }

@@ -11,6 +11,13 @@
       <ul class="menu menu-horizontal px-1 gap-4 ">
         @if (authService.currentUser(); as user) {
           <li>
+            <a routerLink="/create-briefing"
+               routerLinkActive="bg-zinc-200 text-primary"
+               class="rounded-md px-3 py-2 hover:bg-zinc-200">
+              Create Briefing
+            </a>
+          </li>
+          <li>
             <a routerLink="/my-account"
                routerLinkActive="bg-zinc-200 text-primary"
                class="rounded-md px-3 py-2 hover:bg-zinc-200">
