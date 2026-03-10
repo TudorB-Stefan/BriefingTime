@@ -1,0 +1,62 @@
+<div class="flex justify-center text-3xl w-full h-full p-10 space-y-10">
+  <div>
+    <div class="font-bold mb-15">Log In:</div>
+    <form #loginForm="ngForm" (ngSubmit)="register()" class="mb-15 px-10">
+      <div class="flex w-full h-full">
+        <div class="mb-5 space-x-10 space-y-5 mr-5">
+          <p>Email </p>
+          <p>Username </p>
+          <p>Firstname </p>
+          <p>Lastname </p>
+          <p>Password </p>
+          <p>Confirm Password </p>
+        </div>
+        <div class="space-x-10 space-y-5">
+          <input
+            [(ngModel)]="creds.email"
+            type="text"
+            name="email"
+            class="w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/60"
+            placeholder="Email">
+          <input
+            [(ngModel)]="creds.userName"
+            type="text"
+            name="userName"
+            class="w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/60"
+            placeholder="Username">
+          <input
+            [(ngModel)]="creds.firstName"
+            type="text"
+            name="firstName"
+            class="w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/60"
+            placeholder="Firstname">
+          <input
+            [(ngModel)]="creds.lastName"
+            type="text"
+            name="lastName"
+            class="w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/60"
+            placeholder="Lastname">
+          <input
+            [(ngModel)]="creds.password"
+            type="password"
+            name="password"
+            class=" w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/60"
+            placeholder="Password">
+          <input
+            [(ngModel)]="creds.confirmPassword"
+            type="password"
+            name="confirmPassword"
+            class=" w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/60"
+            placeholder="Confirm Password">
+        </div>
+      </div>
+      <button type="submit" class="bg-zinc-500 rounded-full p-2 text-zinc-300 shadow-3xl hover:text-zinc-200 hover:bg-zinc-600">Register</button>
+    </form>
+    <div>
+      <p>Already have an account?</p>
+      <a class="text-purple-600 hover:text-purple-700" routerLink="/login">
+        Sing in
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<div class="w-full bg-zinc-300">
+  <div class="navbar container mx-auto px-4 py-2">
+
+    <div class="flex-1">
+      <a routerLink="/" class="text-xl font-bold tracking-tight hover:opacity-80 transition-opacity">
+        Briefing<span class="text-purple-600">Time</span>
+      </a>
+    </div>
+
+    <div class="flex-none">
+      <ul class="menu menu-horizontal px-1 gap-4 ">
+        @if (authService.currentUser(); as user) {
+          <li>
+            <a routerLink="/my-account"
+               routerLinkActive="bg-zinc-200 text-primary"
+               class="rounded-md px-3 py-2 hover:bg-zinc-200">
+              {{ user.userName }}
+            </a>
+          </li>
+          <li>
+            <a (click)="authService.logout()"
+               class="rounded-md px-3 py-2 hover:bg-zinc-200 cursor-pointer text-zinc-700 font-medium">
+              Log out
+            </a>
+          </li>
+        } @else {
+          <li>
+            <a routerLink="/login"
+               routerLinkActive="bg-zinc-200 text-primary"
+               class="rounded-md px-3 py-2 hover:bg-zinc-200">
+              Log In
+            </a>
+          </li>
+          <li>
+            <a routerLink="/register"
+               routerLinkActive="bg-zinc-200 text-primary"
+               class="rounded-md px-3 py-2 hover:bg-zinc-200">
+              Register
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</div>
