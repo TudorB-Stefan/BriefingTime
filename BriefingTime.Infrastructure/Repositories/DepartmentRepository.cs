@@ -21,6 +21,13 @@ public class DepartmentRepository(AppDbContext context) : IDepartmentRepository
             .FirstOrDefaultAsync(c => c.Id == id);
     }
 
+    public async Task<Department?> GetByNameAsync(string name)
+    {
+        return await context.Departments
+            .Include(d => d.Briefings)
+            .FirstOrDefaultAsync(c => EF.Functions.ILike(c.Name,name));
+    }
+
     public async Task AddAsync(Department department)
     {
         await context.Departments.AddAsync(department);

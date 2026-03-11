@@ -1,8 +1,9 @@
 import { HttpClient } from "@angular/common/http";
-import {inject, Injectable } from '@angular/core';
+import {inject, Injectable, signal } from '@angular/core';
 import { BriefingListModel } from "../../shared/models/briefing-list.model";
 import { BriefingDetailModel } from "../../shared/models/briefing-detail.model";
 import { BriefingCreateModel } from "../../shared/models/briefing-create.model";
+import { DepartmentService } from "./department-service";
 
 @Injectable({
   providedIn: 'root',

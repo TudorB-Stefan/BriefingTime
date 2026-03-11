@@ -1,8 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { BriefingCreateModel } from "../../../models/briefing-create.model";
 import { Router } from "@angular/router";
 import { BriefingService } from "../../../../core/services/briefing.service";
 import { FormsModule } from "@angular/forms";
+import { DepartmentService } from "../../../../core/services/department-service";
 
 @Component({
   selector: 'app-briefing-create',
@@ -10,8 +11,16 @@ import { FormsModule } from "@angular/forms";
   templateUrl: './briefing-create.html',
   styleUrl: './briefing-create.css',
 })
-export class BriefingCreate {
+export class BriefingCreate implements OnInit {
   private briefingService = inject(BriefingService);
+  private departmentService = inject(DepartmentService);
+  protected departments = signal<any[]>([]);
+  ngOnInit(){
+    this.departmentService.getDepartments().subscribe({
+      next: (data) => this.departments.set(data),
+      error: (err) => console.error('Failed to load departments', err)
+    })
+  }
   private router = inject(Router);
   creds: BriefingCreateModel = {
     title: '',
