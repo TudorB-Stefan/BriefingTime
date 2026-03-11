@@ -32,7 +32,7 @@ public class BriefingController(IWebHostEnvironment environment,IDepartmentRepos
     [HttpGet("{id}")]
     public async Task<ActionResult<BriefingDetailDto>> GetBriefingDetailById(string id)
     {
-        var briefing = await briefingRepository.GetByIdAsync(id);
+        var briefing = await briefingRepository.GetByIdWithDetailsAsync(id);
         if (briefing == null) return NotFound();
         var briefingDto = briefing.ToDetailDto();
         return Ok(briefingDto);
@@ -45,7 +45,7 @@ public class BriefingController(IWebHostEnvironment environment,IDepartmentRepos
         var book = await briefingRepository.GetByIdAsync(id);
         if (book == null) return NotFound();
         if (string.IsNullOrEmpty(book.FileUrl)) return NotFound("Invalid briefing file path.");
-        string filePath = Path.Combine(environment.WebRootPath, "uploads", book.FileUrl);
+        string filePath = Path.Combine(environment.ContentRootPath, "uploads", book.FileUrl);
         if(!System.IO.File.Exists(filePath)) return NotFound("Corrupted briefing file.");
         string contentType = book.ContentType ?? "application/octet-stream";
         string downloadName = book.OriginalFileName ?? book.FileUrl;
@@ -61,7 +61,7 @@ public class BriefingController(IWebHostEnvironment environment,IDepartmentRepos
         var extension = Path.GetExtension(dto.File.FileName).ToLower();
         if (!allowedExtensions.Contains(extension)) return BadRequest("Invalid file extension!");
         
-        string uploadFolder = Path.Combine(environment.WebRootPath,"uploads");
+        string uploadFolder = Path.Combine(environment.ContentRootPath,"uploads");
         if(!Directory.Exists(uploadFolder)) Directory.CreateDirectory(uploadFolder);
         
         string fileId = Guid.NewGuid().ToString() + Path.GetExtension(dto.File.FileName);

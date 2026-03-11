@@ -25,4 +25,8 @@
     <ProjectReference Include="..\BriefingTime.Infrastructure\BriefingTime.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="uploads\" />
+  </ItemGroup>
+
 </Project>

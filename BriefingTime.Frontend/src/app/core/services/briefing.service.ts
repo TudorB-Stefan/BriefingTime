@@ -27,4 +27,9 @@ export class BriefingService {
     }
     return this.http.post(this.baseUrl + 'briefing',formData);
   }
+  downloadBriefing(id: string) {
+    return this.http.get(`${this.baseUrl}briefing/${id}/download`, {
+      responseType: 'blob'
+    });
+  }
 }

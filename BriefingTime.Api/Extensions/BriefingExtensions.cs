@@ -21,15 +21,16 @@ public static class BriefingExtensions
     {
         return new BriefingDetailDto
         {
+            Id = briefing.Id,
             Title = briefing.Title,
             Author = briefing.Author,
             Description = briefing.Description,
-            DepartmentName = briefing.Department.Name,
+            DepartmentName = briefing.Department?.Name ?? "No Department",
             ExpiresAt = briefing.ExpiresAt,
             FileSizeByte = briefing.FileSizeBytes,
             FileUrl = briefing.FileUrl,
             ContentType = briefing.ContentType,
-            Comments = briefing.Comments.Select(c => c.ToDetailDto()).ToList()
+            Comments = briefing.Comments?.Select(c => c.ToDetailDto()).ToList() ?? new List<CommentDetailDto>()
         };
     }
 }

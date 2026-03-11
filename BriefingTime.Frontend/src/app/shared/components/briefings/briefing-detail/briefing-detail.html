@@ -1,1 +1,56 @@
-<p>briefing-detail works!</p>
+<div class="w-full min-h-full p-10 flex justify-center animate-fade-in">
+  <div class="w-full max-w-4xl">
+
+    @if (isLoading()) {
+      <div class="flex flex-col items-center justify-center p-20 space-y-4">
+        <span class="loading loading-spinner loading-lg text-purple-600"></span>
+        <p class="text-zinc-500 font-medium">Loading briefing details...</p>
+      </div>
+    }
+
+    @else if (briefing(); as brief) {
+
+      <a routerLink="/my-account" class="inline-flex items-center text-purple-600 hover:text-purple-800 font-medium mb-6 transition-colors cursor-pointer">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+        </svg>
+        Back to Dashboard
+      </a>
+
+        <div class="mb-8 pb-8 border-b border-zinc-200">
+
+          <h1 class=" text-4xl font-extrabold text-zinc-800 mb-4 leading-tight">
+            {{ brief.title }}
+          </h1>
+          <div class="text-purple-600 font-bold text-lg">
+            <a>{{ brief.departmentName || 'General' }}</a>
+          </div>
+        </div>
+
+        <div class="text-lg text-zinc-600 leading-relaxed mb-12 whitespace-pre-wrap">
+          {{ brief.description || 'No description provided for this briefing.' }}
+        </div>
+
+        <div class="flex flex-wrap gap-4 pt-6">
+          <button (click)="downlaodBrief(brief.id, brief.title)" class="flex items-center justify-center bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-full shadow-md transition-colors w-full sm:w-auto cursor-pointer">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+            </svg>
+            Download PDF
+          </button>
+
+          <button class="flex items-center justify-center bg-zinc-100 hover:bg-zinc-200 text-zinc-700 font-bold py-3 px-8 rounded-full transition-colors w-full sm:w-auto cursor-pointer">
+            Save for Later
+          </button>
+        </div>
+
+    } @else {
+      <div class="bg-red-50 border border-red-200 rounded-3xl p-10 text-center">
+        <h2 class="text-2xl font-bold text-red-600 mb-2">Briefing Not Found</h2>
+        <p class="text-red-500 mb-6">This document may have been deleted, or the link is invalid.</p>
+        <a routerLink="/my-account" class="text-purple-600 font-bold hover:underline">Return Home</a>
+      </div>
+    }
+
+  </div>
+</div>
