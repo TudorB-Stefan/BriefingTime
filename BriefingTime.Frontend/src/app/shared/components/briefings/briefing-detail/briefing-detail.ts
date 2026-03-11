@@ -2,6 +2,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from "@angular/router";
 import { BriefingService } from "../../../../core/services/briefing.service";
 import { BriefingDetailModel } from "../../../models/briefing-detail.model";
+import { SavedService } from "../../../../core/services/saved.service";
 
 @Component({
   selector: 'app-briefing-detail',
@@ -12,6 +13,7 @@ import { BriefingDetailModel } from "../../../models/briefing-detail.model";
 export class BriefingDetail implements OnInit {
   private route = inject(ActivatedRoute);
   private briefingService = inject(BriefingService);
+  private savedService = inject(SavedService);
   protected briefing = signal<BriefingDetailModel|null>(null);
   protected isLoading = signal<boolean>(true);
   ngOnInit(){
@@ -28,6 +30,17 @@ export class BriefingDetail implements OnInit {
         }
       });
     }
+  }
+  saveBrief(id: string){
+    this.savedService.createSave(id).subscribe({
+      next: () => {
+        alert('Briefing saved successfully!');
+      },
+      error: (err) => {
+        console.error('Failed to save briefing', err);
+        alert('Could not save the briefing.');
+      }
+    });
   }
   downlaodBrief(id: string, title: string){
     this.briefingService.downloadBriefing(id).subscribe({

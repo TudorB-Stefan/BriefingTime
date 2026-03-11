@@ -9,6 +9,16 @@ namespace BriefingTime.Api.Controllers;
 
 public class SavedBriefingController(ISavedBriefingRepository savedBriefingRepository,IBriefingRepository briefingRepository) : BaseController
 {
+    [Authorize]
+    [HttpGet("my-saved")]
+    public async Task<ActionResult<IEnumerable<SavedBriefingListDto>>> GetMySaved()
+    {
+        var userId = User.GetUserId();
+        var savedBriefings = await savedBriefingRepository.GetByUserAsync(userId);
+        var savedBriefingsDto = savedBriefings.Select(s => s.ToListDto()).ToList();
+        return Ok(savedBriefingsDto);
+    }
+    
     [HttpGet("user-{userId}")]
     public async Task<ActionResult<IEnumerable<SavedBriefingListDto>>> GetByUserId(string userId)
     {
@@ -35,7 +45,6 @@ public class SavedBriefingController(ISavedBriefingRepository savedBriefingRepos
 
     [Authorize]
     [HttpPost]
-
     public async Task<ActionResult> CreateSavedBriefing(SavedBriefingCreateDto dto)
     {
         var userId = User.GetUserId();

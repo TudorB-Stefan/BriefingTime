@@ -27,7 +27,7 @@
           </div>
         </div>
 
-        <div class="text-lg text-zinc-600 leading-relaxed mb-12 whitespace-pre-wrap">
+        <div class="text-lg text-zinc-950 leading-relaxed mb-12 whitespace-pre-wrap">
           {{ brief.description || 'No description provided for this briefing.' }}
         </div>
 
@@ -39,8 +39,10 @@
             Download PDF
           </button>
 
-          <button class="flex items-center justify-center bg-zinc-100 hover:bg-zinc-200 text-zinc-700 font-bold py-3 px-8 rounded-full transition-colors w-full sm:w-auto cursor-pointer">
-            Save for Later
+          <button
+            (click)="saveBrief(brief.id)"
+            class="flex items-center justify-center bg-zinc-100 hover:bg-zinc-200 text-zinc-700 font-bold py-3 px-8 rounded-full transition-colors w-full sm:w-auto cursor-pointer">
+            Save
           </button>
         </div>
 

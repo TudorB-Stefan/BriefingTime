@@ -10,7 +10,7 @@ public class SavedBriefingRepository(AppDbContext context) : ISavedBriefingRepos
     public async Task<IEnumerable<SavedBriefing>> GetByUserAsync(string userId)
     {
         return await context.SavedBriefings
-            .Include(s => s.Briefing).ThenInclude(b => b.UserId)
+            .Include(s => s.Briefing)
             .Where(s => s.UserId == userId)
             .ToListAsync();
     }

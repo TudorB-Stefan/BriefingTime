@@ -11,8 +11,8 @@ public static class SavedBriefingExtensions
         {
             BriefingId = savedBriefingListDto.BriefingId,
             UserId = savedBriefingListDto.UserId,
-            BriefingTitle = savedBriefingListDto.Briefing.Title,
-            Author = savedBriefingListDto.Briefing.Author,
+            BriefingTitle = savedBriefingListDto.Briefing?.Title ?? "Unknown Title",
+            Author = savedBriefingListDto.Briefing?.Author ?? "Unknown Author",
             CreatedAt = savedBriefingListDto.CreatedAt
         };
     }
