@@ -13,4 +13,15 @@ public static class DownloadLogExtensions
             BriefingId = downloadLog.BriefingId
         };
     }
+    public static DownloadLogListDto ToListDto(this DownloadLog downloadLog)
+    {
+        return new DownloadLogListDto
+        {
+            UserId = downloadLog.UserId,
+            UserName = downloadLog.User?.UserName ?? "Unknown Username",
+            BriefingId = downloadLog.BriefingId,
+            BriefingTitle = downloadLog.Briefing?.Title ?? "Deleted Briefing",
+            DownloadedAt = downloadLog.CreatedAt
+        };
+    }
 }

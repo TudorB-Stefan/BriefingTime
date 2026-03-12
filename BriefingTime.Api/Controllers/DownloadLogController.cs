@@ -13,10 +13,18 @@ public class DownloadLogController(IDownloadLogRepository downloadLogRepository,
     public async Task<ActionResult<IEnumerable<DownloadLogDetailDto>>> GetAll()
     {
         var downloadLogs = await downloadLogRepository.GetAllAsync();
-        var downloadLogsDto = downloadLogs.Select(d => d.ToDetailDto()).ToList();
+        var downloadLogsDto = downloadLogs.Select(d => d.ToListDto()).ToList();
         return Ok(downloadLogsDto);
     }
-    
+    [Authorize]
+    [HttpGet("my-downloads")]
+    public async Task<ActionResult<IEnumerable<DownloadLogDetailDto>>> GetById()
+    {
+        var userId = User.GetUserId();
+        var downloadLogs = await downloadLogRepository.GetListById(userId);
+        var downloadLogDto = downloadLogs.Select(d => d.ToListDto()).ToList();
+        return Ok(downloadLogDto);
+    }
     [HttpGet("{id}")]
     public async Task<ActionResult<DownloadLogDetailDto>> GetById(string id)
     {

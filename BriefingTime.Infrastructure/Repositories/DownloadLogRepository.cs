@@ -12,6 +12,16 @@ public class DownloadLogRepository(AppDbContext context) : IDownloadLogRepositor
         return await context.DownloadLogs.ToListAsync();
     }
 
+    public async Task<IEnumerable<DownloadLog>> GetListById(string userId)
+    {
+        return await context.DownloadLogs
+            .Include(d => d.User)
+            .Include(d => d.Briefing)
+            .Where(d => d.UserId == userId)
+            .OrderByDescending(d => d.CreatedAt)
+            .ToListAsync();
+    }
+
     public async Task<DownloadLog?> GetByIdAsync(string id)
     {
         return await context.DownloadLogs.FindAsync(id);
