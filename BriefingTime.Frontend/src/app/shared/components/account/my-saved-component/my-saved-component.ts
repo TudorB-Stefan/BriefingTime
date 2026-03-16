@@ -30,4 +30,19 @@ export class MySavedComponent implements OnInit {
       }
     });
   }
+  deleteLiveBriefings(id: string){
+    this.isLoading.set(true);
+    this.savedService.deleteSave(id).subscribe({
+      next: () => {
+        this.savedBriefings.update(savedBriefings =>
+          savedBriefings.filter(saved => saved.briefingId !== id)
+        );
+        this.isLoading.set(false);
+      },
+      error: (err) => {
+        console.error('Failed to fetch publishings', err);
+        this.isLoading.set(false);
+      }
+    });
+  }
 }
