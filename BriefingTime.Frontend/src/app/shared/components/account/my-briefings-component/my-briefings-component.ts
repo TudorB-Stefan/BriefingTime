@@ -26,8 +26,27 @@ export class MyBriefingsComponent implements OnInit {
         this.isLoading.set(false);
       },
       error: (err) => {
-        console.error('Failed to fetch publishings', err);
+        console.error('Failed to fetch briefings', err);
         this.isLoading.set(false);
+      }
+    });
+  }
+
+  deleteBriefing(id: string){
+    const confirmDelete = confirm('Are you sure you want to delete this briefing?');
+    if (!confirmDelete) return;
+    this.isLoading.set(true);
+    this.briefingService.deleteBriefing(id).subscribe({
+      next: () => {
+        this.liveBriefings.update(currentBriefings =>
+          currentBriefings.filter(briefing => briefing.id !== id)
+        );
+        this.isLoading.set(false);
+      },
+      error: (err) => {
+        console.error('Failed to delete briefing', err);
+        this.isLoading.set(false);
+        alert('Could not delete the briefing. Please try again.');
       }
     });
   }

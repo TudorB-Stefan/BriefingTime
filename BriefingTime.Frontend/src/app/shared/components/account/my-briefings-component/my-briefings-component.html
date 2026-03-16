@@ -18,9 +18,14 @@
             </p>
           </a>
 
-          <div class="mt-auto border-t border-zinc-100 pt-3">
-            <button class="w-full py-2 text-sm font-bold text-purple-600 border border-purple-600 rounded-lg hover:bg-purple-600 hover:text-white transition-colors cursor-pointer">
+          <div class="mt-auto border-zinc-100 pt-3">
+            <button [routerLink]="['/edit', briefing.id]" class="w-full p-2 text-sm font-bold text-purple-600 border border-purple-600 rounded-lg hover:bg-purple-600 hover:text-white transition-colors cursor-pointer">
               Edit Briefing
+            </button>
+          </div>
+          <div class="mt-auto border-zinc-100 pt-3">
+            <button (click)="deleteBriefing(briefing.id)" class="w-full p-2 text-sm font-bold text-purple-600 border border-purple-600 rounded-lg hover:bg-purple-600 hover:text-white transition-colors cursor-pointer">
+              Delete
             </button>
           </div>
 

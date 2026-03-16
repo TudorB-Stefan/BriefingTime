@@ -5,6 +5,7 @@ import { BriefingDetailModel } from "../../shared/models/briefing-detail.model";
 import { BriefingCreateModel } from "../../shared/models/briefing-create.model";
 import { DepartmentService } from "./department-service";
 import { DownloadService } from "./download.service";
+import { BriefingEditModel } from "../../shared/models/briefing-edit.model";
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +30,7 @@ export class BriefingService {
     }
     return this.http.post(this.baseUrl + 'briefing',formData);
   }
+
   downloadBriefing(id: string) {
     this.downlaodService.createDownloadLog(id).subscribe({
       error: (err) => console.error('Failed to log the download silently:', err)
@@ -36,5 +38,17 @@ export class BriefingService {
     return this.http.get(`${this.baseUrl}briefing/${id}/download`, {
       responseType: 'blob'
     });
+  }
+
+  editBriefing(id:string, model: BriefingEditModel){
+    const date = {
+      title: model.title,
+      description: model.description,
+      departmentId: model.departmentId
+    };
+    return this.http.put(`${this.baseUrl}briefing/${id}`,date);
+  }
+  deleteBriefing(id: string){
+    return this.http.delete(`${this.baseUrl}briefing/${id}`);
   }
 }

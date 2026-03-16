@@ -15,13 +15,13 @@ export class BriefingCreate implements OnInit {
   private briefingService = inject(BriefingService);
   private departmentService = inject(DepartmentService);
   protected departments = signal<any[]>([]);
+  private router = inject(Router);
   ngOnInit(){
     this.departmentService.getDepartments().subscribe({
       next: (data) => this.departments.set(data),
       error: (err) => console.error('Failed to load departments', err)
     })
   }
-  private router = inject(Router);
   creds: BriefingCreateModel = {
     title: '',
     description: '',
