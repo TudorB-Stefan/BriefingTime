@@ -6,6 +6,7 @@ import { BriefingDetail } from "./shared/components/briefings/briefing-detail/br
 import { MyAccount } from "./shared/components/account/my-account/my-account";
 import { BriefingCreate } from "./shared/components/briefings/briefing-create/briefing-create";
 import { BriefingEdit } from "./shared/components/briefings/briefing-edit/briefing-edit";
+import { AllBriefings } from "./shared/components/briefings/all-briefings/all-briefings";
 
 export const routes: Routes = [
   {path: 'login', component: Login, title: 'Log In'},
@@ -14,5 +15,5 @@ export const routes: Routes = [
   {path: 'create-briefing', component: BriefingCreate, title: 'Create Briefing', canActivate: [authGuard]},
   { path: 'briefing/:id', component: BriefingDetail, title: 'Briefing' },
   { path: 'edit/:id', component: BriefingEdit, title: 'Edit Briefing' },
-  {path: '', redirectTo: '/login', pathMatch: 'full'},
+  {path: '', component: AllBriefings, title: 'Edit Briefing'},
 ];

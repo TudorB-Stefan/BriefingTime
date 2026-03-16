@@ -1,0 +1,35 @@
+<div class="animate-fade-in w-full">
+  @if (isLoading()) {
+    <div class="flex justify-center p-10 w-full">
+      <span class="loading loading-spinner loading-lg text-purple-600"></span>
+    </div>
+  } @else {
+
+    <div class="grid grid-cols-2 gap-6 w-full">
+
+      @for (briefing of liveBriefings(); track briefing.id) {
+
+        <div class="bg-white rounded-2xl shadow-sm border border-zinc-200 p-5 hover:shadow-md transition-shadow flex flex-col h-full w-full">
+
+          <a [routerLink]="['/briefing', briefing.id]" class="flex-grow hover:opacity-70 transition-opacity cursor-pointer block mb-4">
+            <h3 class="font-bold text-xl text-purple-700 mb-2 truncate">{{ briefing.title }}</h3>
+            <p class="text-sm text-zinc-500 line-clamp-2">
+              {{ briefing.departmentName || 'No department provided.' }}
+            </p>
+          </a>
+
+        </div>
+
+      } @empty {
+        <div class="col-span-2 bg-zinc-100/50 border-2 border-dashed border-zinc-400 rounded-2xl p-10 text-center flex flex-col items-center justify-center w-full">
+          <svg class="w-12 h-12 text-zinc-400 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+          </svg>
+          <h3 class="text-lg font-medium text-zinc-700">No Publishings Yet</h3>
+          <p class="text-zinc-500 mt-1">You haven't uploaded any briefings.</p>
+        </div>
+      }
+
+    </div>
+  }
+</div>

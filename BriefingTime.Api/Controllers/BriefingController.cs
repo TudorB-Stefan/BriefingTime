@@ -87,7 +87,7 @@ public class BriefingController(IWebHostEnvironment environment,IDepartmentRepos
             FileSizeBytes = dto.File.Length,
             ContentType = dto.File.ContentType,
             CreatedAt = DateTime.UtcNow,
-            ExpiresAt = DateTime.UtcNow.AddHours(1),
+            ExpiresAt = DateTime.UtcNow.AddHours(12),
             ModifiedAt = DateTime.UtcNow,
             DepartmentId = dto.DepartmentId,
             UserId = userId
