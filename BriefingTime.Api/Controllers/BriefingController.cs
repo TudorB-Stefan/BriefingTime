@@ -19,6 +19,15 @@ public class BriefingController(IWebHostEnvironment environment,IDepartmentRepos
         return Ok(briefingDto); 
     }
 
+    [HttpGet("my-list")]
+    public async Task<ActionResult<IReadOnlyList<BriefingListDto>>> GetBriefingForUserList()
+    {
+        var userId = User.GetUserId();
+        var briefings = await briefingRepository.GetAllForUserAsync(userId);
+        var briefingDto = briefings.Select(b => b.ToListDto()).ToList();
+        return Ok(briefingDto);
+    }
+
     [Authorize]
     [HttpGet("my-briefings")]
     public async Task<ActionResult<IReadOnlyList<BriefingListDto>>> GetMyBriefing()

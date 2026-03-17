@@ -16,6 +16,16 @@ public class BriefingRepository(AppDbContext context) : IBriefingRepository
             .ToListAsync();
     }
 
+    public async Task<IEnumerable<Briefing>> GetAllForUserAsync(string userId)
+    {
+        return await context.Briefings
+            .Where(b => b.ExpiresAt > DateTime.UtcNow)
+            .Where(b => context.UserDepartments.Any(ud => ud.UserId == userId && ud.DepartmentId == b.DepartmentId
+            ))
+            .Include(b => b.Department)
+            .ToListAsync();
+    }
+
     public async Task<Briefing?> GetByIdAsync(string id)
     {
         return await context.Briefings

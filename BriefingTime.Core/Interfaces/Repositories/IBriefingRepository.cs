@@ -5,6 +5,7 @@ namespace BriefingTime.Core.Interfaces.Repositories;
 public interface IBriefingRepository
 {
     Task<IEnumerable<Briefing>> GetAllAsync();
+    Task<IEnumerable<Briefing>> GetAllForUserAsync(string userId);
     Task<Briefing?> GetByIdAsync(string id);
     Task<Briefing?> GetByIdWithDetailsAsync(string id);
     Task<IEnumerable<Briefing>> GetByUserId(string userId);

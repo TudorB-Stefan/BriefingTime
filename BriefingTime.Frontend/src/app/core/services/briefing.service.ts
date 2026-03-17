@@ -15,7 +15,7 @@ export class BriefingService {
   private downlaodService = inject(DownloadService);
   private baseUrl = 'http://localhost:8080/api/';
   getAllBriefings(){
-    return this.http.get<BriefingListModel[]>(this.baseUrl + 'briefing');
+    return this.http.get<BriefingListModel[]>(this.baseUrl + 'briefing/my-list');
   }
   getMyBriefings(){
     return this.http.get<BriefingListModel[]>(this.baseUrl + 'briefing/my-briefings');

@@ -20,6 +20,7 @@ builder.Services.AddControllers();
 builder.Services.AddCors();
 builder.Services.AddHostedService<BriefingCleanupService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IAdminRepository, AdminRepository>();
 builder.Services.AddScoped<IBriefingRepository, BriefingRepository>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IDownloadLogRepository, DownloadLogRepository>();
