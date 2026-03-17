@@ -13,6 +13,15 @@ public class DepartmentRepository(AppDbContext context) : IDepartmentRepository
             .Include(d => d.Briefings)
             .ToListAsync();
     }
+    public async Task<IEnumerable<Department>> GetAllAsyncByUser(string userId)
+    {
+        return await context.Departments
+            .Where(d => context.UserDepartments.Any(
+                ud => ud.UserId == userId && ud.DepartmentId == d.Id
+            ))
+            .Include(d => d.Briefings)
+            .ToListAsync();
+    }
 
     public async Task<Department?> GetByIdAsync(string id)
     {

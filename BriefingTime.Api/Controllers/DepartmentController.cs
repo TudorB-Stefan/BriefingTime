@@ -16,6 +16,14 @@ public class DepartmentController(IDepartmentRepository departmentRepository) : 
         var departmentDtos = departments.Select(c => c.ToListDto());
         return Ok(departmentDtos);
     }
+    [HttpGet("my-departments")]
+    public async Task<ActionResult<IEnumerable<DepartmentListDto>>> GetAllForUser()
+    {
+        var userId = User.GetUserId();
+        var departments = await departmentRepository.GetAllAsyncByUser(userId);
+        var departmentDtos = departments.Select(c => c.ToListDto());
+        return Ok(departmentDtos);
+    }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<DepartmentDetailDto>> GetById(string id)
