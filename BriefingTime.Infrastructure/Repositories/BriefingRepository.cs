@@ -1,6 +1,7 @@
 ﻿using BriefingTime.Core.Entities;
 using BriefingTime.Core.Interfaces.Repositories;
 using BriefingTime.Infrastructure.Data;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
 namespace BriefingTime.Infrastructure.Repositories;

@@ -255,6 +255,21 @@ namespace BriefingTime.Infrastructure.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("BriefingTime.Core.Entities.UserDepartment", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("DepartmentId")
+                        .HasColumnType("text");
+
+                    b.HasKey("UserId", "DepartmentId");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.ToTable("UserDepartments");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -463,6 +478,25 @@ namespace BriefingTime.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("BriefingTime.Core.Entities.UserDepartment", b =>
+                {
+                    b.HasOne("BriefingTime.Core.Entities.Department", "Department")
+                        .WithMany("UserDepartments")
+                        .HasForeignKey("DepartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("BriefingTime.Core.Entities.User", "User")
+                        .WithMany("UserDepartments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Department");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -524,6 +558,8 @@ namespace BriefingTime.Infrastructure.Migrations
             modelBuilder.Entity("BriefingTime.Core.Entities.Department", b =>
                 {
                     b.Navigation("Briefings");
+
+                    b.Navigation("UserDepartments");
                 });
 
             modelBuilder.Entity("BriefingTime.Core.Entities.User", b =>
@@ -535,6 +571,8 @@ namespace BriefingTime.Infrastructure.Migrations
                     b.Navigation("SavedBriefings");
 
                     b.Navigation("UploadedBriefing");
+
+                    b.Navigation("UserDepartments");
                 });
 #pragma warning restore 612, 618
         }

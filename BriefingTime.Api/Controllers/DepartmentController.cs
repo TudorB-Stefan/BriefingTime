@@ -26,7 +26,7 @@ public class DepartmentController(IDepartmentRepository departmentRepository) : 
         return Ok(departmentDto);
     }
 
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult> Create(DepartmentCreateDto dto)
     {
@@ -40,7 +40,7 @@ public class DepartmentController(IDepartmentRepository departmentRepository) : 
         await departmentRepository.AddAsync(department);
         return Ok();
     }
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<ActionResult> Delete(string id)
     {

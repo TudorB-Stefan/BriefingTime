@@ -5,6 +5,7 @@ using BriefingTime.Core.Interfaces;
 using BriefingTime.Core.Interfaces.Repositories;
 using BriefingTime.Infrastructure.Data;
 using BriefingTime.Infrastructure.Repositories;
+using BriefingTime.Infrastructure.Seeding;
 using BriefingTime.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -43,6 +44,7 @@ builder.Services.AddIdentityCore<User>(opt =>
     opt.User.RequireUniqueEmail = true;
 })
     .AddRoles<IdentityRole>()
+    .AddDefaultTokenProviders()
     .AddEntityFrameworkStores<AppDbContext>();
 
 var jwtSettings = builder.Configuration.GetSection("Jwt");
@@ -68,6 +70,18 @@ builder.Services.AddAuthentication(options =>
 
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try {
+        await RoleSeeder.SeedAdminAsync(services);
+    }
+    catch (Exception ex) {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while seeding the Admin role.");
+    }
+}
 
 if (app.Environment.IsDevelopment())
 {

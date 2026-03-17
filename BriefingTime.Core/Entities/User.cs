@@ -14,4 +14,5 @@ public class User : IdentityUser
     public ICollection<DownloadLog> DownloadLogs { get; set; }
     public ICollection<Comment> Comments { get; set; }
     public ICollection<SavedBriefing> SavedBriefings { get; set; }
+    public ICollection<UserDepartment> UserDepartments { get; set; }
 }

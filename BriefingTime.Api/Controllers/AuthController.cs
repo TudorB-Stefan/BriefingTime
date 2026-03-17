@@ -42,6 +42,7 @@ public class AuthController(AppDbContext context,UserManager<User> userManager,I
         }
         return Ok();
     }
+    
     [HttpPost("login")]
     public async Task<ActionResult<AuthResponseDto>> Login([FromBody] LoginDto loginDto)
     {
