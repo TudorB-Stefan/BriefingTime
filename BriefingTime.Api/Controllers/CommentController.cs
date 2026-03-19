@@ -11,6 +11,7 @@ namespace BriefingTime.Api.Controllers;
 
 public class CommentController(ICommentRepository commentRepository,IBriefingRepository briefingRepository) : BaseController
 {
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<CommentDetailDto>>> GetAll()
     {
@@ -48,8 +49,9 @@ public class CommentController(ICommentRepository commentRepository,IBriefingRep
     [Authorize]
     public async Task<ActionResult> CreateComment(CommentCreateDto dto)
     {
-        var briefing = await briefingRepository.GetByIdAsync(dto.BriefingId);
         var userId = User.GetUserId();
+        if (userId == null) return Unauthorized();
+        var briefing = await briefingRepository.GetByIdAsyncForUser(userId,dto.BriefingId);
         if (briefing == null) return NotFound("Briefing not found.");
         var comment = new Comment
         {
@@ -62,7 +64,7 @@ public class CommentController(ICommentRepository commentRepository,IBriefingRep
             BriefingId = dto.BriefingId
         };
         await commentRepository.AddAsync(comment);
-        return Ok();
+        return Ok(comment);
     }
 
     [HttpPut("{id}")]

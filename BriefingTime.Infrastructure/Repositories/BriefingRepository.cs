@@ -33,13 +33,29 @@ public class BriefingRepository(AppDbContext context) : IBriefingRepository
             .FirstOrDefaultAsync(b=> b.Id == id);
     }
 
-    public async Task<Briefing?> GetByIdWithDetailsAsync(string id)
+    public async Task<Briefing?> GetByIdAsyncForUser(string userId, string briefId)
+    {
+        return await context.Briefings
+            .Include(b => b.Department)
+            .FirstOrDefaultAsync(b=> 
+                b.Id == briefId &&
+                context.UserDepartments.Any(ud => 
+                    ud.DepartmentId == b.DepartmentId && ud.UserId == userId
+                )
+            );
+    }
+
+    public async Task<Briefing?> GetByIdWithDetailsAsync(string userId,string briefId)
     {
         return await context.Briefings
             .Include(b => b.Comments)
             .Include(b => b.SavedBriefings)
             .Include(b => b.Department)
-            .FirstOrDefaultAsync(b => b.Id == id);
+            .FirstOrDefaultAsync(b => 
+                b.Id == briefId && 
+                context.UserDepartments.Any(ud => 
+                    ud.DepartmentId == b.DepartmentId && ud.UserId == userId
+            ));
     }
 
     public async Task<IEnumerable<Briefing>> GetByUserId(string userId)

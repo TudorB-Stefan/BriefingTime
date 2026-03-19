@@ -9,6 +9,7 @@ namespace BriefingTime.Api.Controllers;
 
 public class DownloadLogController(IDownloadLogRepository downloadLogRepository,IBriefingRepository briefingRepository) : BaseController
 {
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<DownloadLogDetailDto>>> GetAll()
     {

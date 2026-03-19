@@ -49,8 +49,7 @@ public class SavedBriefingController(ISavedBriefingRepository savedBriefingRepos
     {
         var userId = User.GetUserId();
         if (userId == null) return Unauthorized();
-        
-        var briefing = await briefingRepository.GetByIdAsync(dto.BriefingId);
+        var briefing = await briefingRepository.GetByIdAsyncForUser(userId,dto.BriefingId);
         if (briefing == null) return NotFound();
 
         var existingFav = await savedBriefingRepository.GetByIdAsync(userId, dto.BriefingId);

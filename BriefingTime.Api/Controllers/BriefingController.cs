@@ -11,6 +11,7 @@ namespace BriefingTime.Api.Controllers;
 
 public class BriefingController(IWebHostEnvironment environment,IDepartmentRepository departmentRepository,IBriefingRepository briefingRepository,IMemberRepository memberRepository) : BaseController
 {
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public async Task<ActionResult<IReadOnlyList<BriefingListDto>>> GetBriefingList()
     {
@@ -18,7 +19,7 @@ public class BriefingController(IWebHostEnvironment environment,IDepartmentRepos
         var briefingDto = briefings.Select(b => b.ToListDto()).ToList();
         return Ok(briefingDto); 
     }
-
+    [Authorize]
     [HttpGet("my-list")]
     public async Task<ActionResult<IReadOnlyList<BriefingListDto>>> GetBriefingForUserList()
     {
@@ -38,10 +39,11 @@ public class BriefingController(IWebHostEnvironment environment,IDepartmentRepos
         return Ok(briefingDto);
     }
     
-    [HttpGet("{id}")]
-    public async Task<ActionResult<BriefingDetailDto>> GetBriefingDetailById(string id)
+    [HttpGet("{briefId}")]
+    public async Task<ActionResult<BriefingDetailDto>> GetBriefingDetailById(string briefId)
     {
-        var briefing = await briefingRepository.GetByIdWithDetailsAsync(id);
+        var userId = User.GetUserId();
+        var briefing = await briefingRepository.GetByIdWithDetailsAsync(userId,briefId);
         if (briefing == null) return NotFound();
         var briefingDto = briefing.ToDetailDto();
         return Ok(briefingDto);
@@ -134,7 +136,8 @@ public class BriefingController(IWebHostEnvironment environment,IDepartmentRepos
     {
         var briefing = await briefingRepository.GetByIdAsync(id);
         if (briefing == null) return NotFound();
-        if (briefing.UserId != User.GetUserId()) return Forbid("You can only delete your own briefings.");
+        if (briefing.UserId != User.GetUserId() && !User.IsInRole("Admin")) 
+            return StatusCode(403, "You can only delete your own briefings.");
         if (!string.IsNullOrEmpty(briefing.FileUrl))
         {
             var filePath = Path.Combine(environment.WebRootPath, "uploads", briefing.FileUrl);

@@ -9,6 +9,8 @@ namespace BriefingTime.Api.Controllers;
 
 public class DepartmentController(IDepartmentRepository departmentRepository) : BaseController
 {
+    
+    [Authorize(Roles = "Admin")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<DepartmentListDto>>> GetAll()
     {
@@ -16,6 +18,7 @@ public class DepartmentController(IDepartmentRepository departmentRepository) : 
         var departmentDtos = departments.Select(c => c.ToListDto());
         return Ok(departmentDtos);
     }
+    [Authorize]
     [HttpGet("my-departments")]
     public async Task<ActionResult<IEnumerable<DepartmentListDto>>> GetAllForUser()
     {
