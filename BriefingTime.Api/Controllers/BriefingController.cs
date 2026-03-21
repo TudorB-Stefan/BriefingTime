@@ -84,12 +84,14 @@ public class BriefingController(IWebHostEnvironment environment,IDepartmentRepos
         var userId = User.GetUserId();
         var author = await memberRepository.GetByIdAsync(userId);
         if (author == null) return NotFound("User not found");
-        var userDepartments = author.UserDepartments.Select(ud => ud.Department).ToList();
-        
+        var userDepartmentIds = author.UserDepartments?
+            .Select(ud => ud.DepartmentId)
+            .ToList() ?? new List<string>();
+
         var department = await departmentRepository.GetByIdAsync(dto.DepartmentId);
         if(department == null) return NotFound("Department not found.");
 
-        if (!userDepartments.Contains(department))
+        if (!userDepartmentIds.Contains(dto.DepartmentId))
             return BadRequest("Unauthorised Department");
         
         var briefing = new Briefing

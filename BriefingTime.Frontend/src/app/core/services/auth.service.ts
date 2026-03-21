@@ -44,4 +44,25 @@ export class AuthService {
     this.currentUser.set(null);
     this.router.navigate(['/login']);
   }
+  isAdmin():boolean{
+    const token = localStorage.getItem('token');
+    if (!token) return false;
+    try {
+      const decoded: any = jwtDecode(token);
+      const microsoftRoleClaim = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
+      const roles = decoded[microsoftRoleClaim] || decoded.role;
+      if (!roles) return false;
+      if (Array.isArray(roles)) {
+        return roles.includes('Admin');
+      }
+      return roles === 'Admin';
+    } catch (error) {
+      console.error('Token decoding failed', error);
+      return false;
+    }
+  }
 }
+function jwtDecode(token: string): any {
+    throw new Error("Function not implemented.");
+}
+

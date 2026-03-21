@@ -1,34 +1,43 @@
-<div class="flex justify-center text-3xl w-full h-full p-10 space-y-10">
-  <div>
-    <div class="font-bold mb-15">Log In:</div>
-    <form #loginForm="ngForm" (ngSubmit)="login()" class="mb-15 px-10">
-      <div class="flex w-full h-full">
-        <div class="mb-5 space-x-10 space-y-5 mr-5">
-          <p>Email </p>
-          <p>Password </p>
-        </div>
-        <div class="space-x-10 space-y-5">
-          <input
-            [(ngModel)]="creds.email"
-            type="text"
-            name="email"
-            class="w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/60"
-            placeholder="Enter your email">
-          <input
-            [(ngModel)]="creds.password"
-            type="password"
-            name="password"
-            class=" w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/60"
-            placeholder="Enter your password">
-        </div>
+<div class="flex items-center justify-center w-full h-full min-h-[60vh]">
+  <div class="w-full max-w-md p-8 bg-white/40 backdrop-blur-md border border-white/60 rounded-3xl shadow-xl">
+    <div class="text-center mb-8">
+      <h2 class="text-3xl font-extrabold text-zinc-900 tracking-tight">Welcome Back</h2>
+      <p class="text-zinc-500 mt-2 text-sm">Please enter your details to sign in.</p>
+    </div>
+    <form #loginForm="ngForm" (ngSubmit)="login()" class="space-y-6">
+      <div class="space-y-3">
+        <label class="block text-base font-semibold text-zinc-900 ml-1">Email</label>
+        <input
+          [(ngModel)]="creds.email"
+          type="email"
+          name="email"
+          required
+          class="w-full bg-white/60 border border-white focus:bg-white rounded-full px-5 py-3 text-zinc-800 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder:text-zinc-400"
+          placeholder="Enter your email">
       </div>
-      <button type="submit" class="bg-zinc-500 rounded-full p-2 text-zinc-300 shadow-3xl hover:text-zinc-200 hover:bg-zinc-600">LogIn</button>
+      <div class="space-y-3">
+        <label class="block text-base font-semibold text-zinc-900 ml-1">Password</label>
+        <input
+          [(ngModel)]="creds.password"
+          type="password"
+          name="password"
+          required
+          class="w-full bg-white/60 border border-white focus:bg-white rounded-full px-5 py-3 text-zinc-800 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder:text-zinc-400"
+          placeholder="Enter your password">
+      </div>
+      <button
+        type="submit"
+        [disabled]="!loginForm.valid"
+        class="w-full bg-zinc-800 text-white font-medium text-lg rounded-full py-3 shadow-lg hover:bg-zinc-900 hover:shadow-xl active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-4">
+        Sign In
+      </button>
     </form>
-    <div>
-      <p>Not Registered?</p>
-      <a class="text-purple-600 hover:text-purple-700" routerLink="/register">
-        Register
-      </a>
+    <div class="mt-8 text-center text-sm text-zinc-600">
+      <p>Don't have an account?
+        <a routerLink="/register" class="font-bold text-purple-600 hover:text-purple-700 hover:underline transition-all">
+          Register here
+        </a>
+      </p>
     </div>
   </div>
 </div>

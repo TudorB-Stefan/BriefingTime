@@ -16,6 +16,7 @@ public class MemberRepository(AppDbContext context) : IMemberRepository
     {
         return await context.Users
             .Include(u => u.UploadedBriefing)
+            .Include(u => u.UserDepartments)
             .FirstOrDefaultAsync(u => u.Id == id);
     }
 

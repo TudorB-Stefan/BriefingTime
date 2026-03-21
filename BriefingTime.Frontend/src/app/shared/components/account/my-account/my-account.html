@@ -1,53 +1,83 @@
 @if(authService.currentUser(); as user) {
-  <div class="space-y-7 text-2xl">
-    <div class="bg-zinc-300/70 w-full rounded-4xl shadow-xl space-y-5 py-10 px-4">
-      <p> <span class="text-purple-600">Username:</span> {{ user.userName }}</p>
-      <p> <span class="text-purple-600">First Name:</span> {{ user.firstName }}</p>
-      <p> <span class="text-purple-600">Last Name:</span> {{ user.lastName }}</p>
-    </div>
-    <hr class="text-zinc-700">
-    <div class="grid grid-cols-3  bg-zinc-300/70 w-full rounded-4xl shadow-xl text-purple-600 p-2">
-      <a (click)="activeTab.set('publishings')"
-         [class]="activeTab() === 'publishings' ? 'bg-purple-600/20 font-bold shadow-inner' : 'hover:bg-purple-600/10'"
-         class="text-center py-2 rounded-4xl cursor-pointer transition-all duration-200">
-        My Briefings
-      </a>
+  <div class="w-full max-w-5xl mx-auto space-y-8">
+    <div class="flex flex-col md:flex-row items-center md:items-start gap-6 p-8 bg-white/40 backdrop-blur-md border border-white/60 rounded-[2rem] shadow-sm">
 
-      <a (click)="activeTab.set('saved')"
-         [class]="activeTab() === 'saved' ? 'bg-purple-600/20 font-bold shadow-inner' : 'hover:bg-purple-600/10'"
-         class="text-center py-2 rounded-4xl cursor-pointer transition-all duration-200">
-        Saved Briefings
-      </a>
 
-      <a (click)="activeTab.set('downloads')"
-         [class]="activeTab() === 'downloads' ? 'bg-purple-600/20 font-bold shadow-inner' : 'hover:bg-purple-600/10'"
-         class="text-center py-2 rounded-4xl cursor-pointer transition-all duration-200">
-        Downloads
-      </a>
-      <div class="col-span-3 mt-8 p-5 w-full">
-        @switch (activeTab()) {
-          @case ('publishings') {
-            <div class="animate-fade-in">
-              <app-my-briefings-component class="block w-full"/>
-            </div>
-          }
-          @case ('saved') {
-            <div class="animate-fade-in w-full">
-              <app-my-saved-component/>
-            </div>
-          }
-          @case ('downloads') {
-            <div class="animate-fade-in">
-              <app-my-downloads-component/>
-            </div>
-          }
-        }
+
+      <div class="flex-1 text-center md:text-left space-y-4 w-full">
+        <div>
+          <h1 class="text-3xl font-extrabold text-zinc-900 tracking-tight">{{ user.firstName }} {{ user.lastName }}</h1>
+          <p class="text-purple-600 font-medium text-lg">@{{ user.userName }}</p>
+        </div>
+
+        <div class="h-px w-full bg-zinc-200/80 rounded-full"></div>
+
+        <div class="flex flex-col sm:flex-row sm:justify-center md:justify-start gap-6 sm:gap-10 text-sm">
+          <div>
+            <span class="block text-zinc-300 font-semibold text-xs uppercase tracking-wider mb-1">First Name</span>
+            <span class="text-zinc-800 font-medium text-base">{{ user.firstName }}</span>
+          </div>
+          <div>
+            <span class="block text-zinc-300 font-semibold text-xs uppercase tracking-wider mb-1">Last Name</span>
+            <span class="text-zinc-800 font-medium text-base">{{ user.lastName }}</span>
+          </div>
+        </div>
       </div>
     </div>
+
+    <div class="grid grid-cols-3 gap-2 p-2 bg-white/40 backdrop-blur-md border border-white/60 rounded-full shadow-sm w-full">
+      <button (click)="activeTab.set('publishings')"
+              [class]="activeTab() === 'publishings' ? 'bg-white text-purple-700 shadow-md font-bold' : 'text-zinc-800 hover:bg-white/50 hover:text-zinc-900 font-medium'"
+              class="text-center py-3 px-2 sm:px-4 rounded-full transition-all duration-300 text-sm sm:text-base cursor-pointer">
+        My Briefings
+      </button>
+
+      <button (click)="activeTab.set('saved')"
+              [class]="activeTab() === 'saved' ? 'bg-white text-purple-700 shadow-md font-bold' : 'text-zinc-800 hover:bg-white/50 hover:text-zinc-900 font-medium'"
+              class="text-center py-3 px-2 sm:px-4 rounded-full transition-all duration-300 text-sm sm:text-base cursor-pointer">
+        Saved Briefings
+      </button>
+
+      <button (click)="activeTab.set('downloads')"
+              [class]="activeTab() === 'downloads' ? 'bg-white text-purple-700 shadow-md font-bold' : 'text-zinc-800 hover:bg-white/50 hover:text-zinc-900 font-medium'"
+              class="text-center py-3 px-2 sm:px-4 rounded-full transition-all duration-300 text-sm sm:text-base cursor-pointer">
+        Downloads
+      </button>
+    </div>
+
+    <div class="w-full bg-white/30 backdrop-blur-md border border-white/50 rounded-[2rem] p-4 sm:p-8 shadow-sm min-h-[400px]">
+      @switch (activeTab()) {
+        @case ('publishings') {
+          <div class="animate-fade-in w-full">
+            <app-my-briefings-component class="block w-full"/>
+          </div>
+        }
+        @case ('saved') {
+          <div class="animate-fade-in w-full">
+            <app-my-saved-component class="block w-full"/>
+          </div>
+        }
+        @case ('downloads') {
+          <div class="animate-fade-in w-full">
+            <app-my-downloads-component class="block w-full"/>
+          </div>
+        }
+      }
+    </div>
+
   </div>
 }
 @else {
-  <div class="text-center py-10">
-    <h2 class="text-xl text-red-600">You must be logged in to view this page.</h2>
+  <div class="flex flex-col items-center justify-center min-h-[50vh] text-center space-y-4">
+    <div class="w-16 h-16 bg-red-50 text-red-500 rounded-full flex items-center justify-center mb-2 shadow-sm">
+      <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+      </svg>
+    </div>
+    <h2 class="text-2xl font-bold text-zinc-900 tracking-tight">Access Denied</h2>
+    <p class="text-zinc-500 max-w-sm">You must be logged in to view your profile and manage your briefings.</p>
+    <a routerLink="/login" class="mt-4 px-6 py-2 bg-purple-600 text-white rounded-full font-medium shadow-md hover:bg-purple-700 hover:shadow-lg transition-all active:scale-95">
+      Go to Login
+    </a>
   </div>
 }

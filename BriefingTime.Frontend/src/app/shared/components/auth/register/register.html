@@ -1,62 +1,88 @@
-<div class="flex justify-center text-3xl w-full h-full p-10 space-y-10">
-  <div>
-    <div class="font-bold mb-15">Log In:</div>
-    <form #loginForm="ngForm" (ngSubmit)="register()" class="mb-15 px-10">
-      <div class="flex w-full h-full">
-        <div class="mb-5 space-x-10 space-y-5 mr-5">
-          <p>Email </p>
-          <p>Username </p>
-          <p>Firstname </p>
-          <p>Lastname </p>
-          <p>Password </p>
-          <p>Confirm Password </p>
-        </div>
-        <div class="space-x-10 space-y-5">
-          <input
-            [(ngModel)]="creds.email"
-            type="text"
-            name="email"
-            class="w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/60"
-            placeholder="Email">
-          <input
-            [(ngModel)]="creds.userName"
-            type="text"
-            name="userName"
-            class="w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/60"
-            placeholder="Username">
+<div class="flex items-center justify-center w-full h-full min-h-[70vh] py-10">
+  <div class="w-full max-w-lg p-8 bg-white/40 backdrop-blur-md border border-white/60 rounded-3xl shadow-xl">
+    <div class="text-center mb-8">
+      <h2 class="text-3xl font-extrabold text-zinc-900 tracking-tight">Create an Account</h2>
+      <p class="text-zinc-500 mt-2 text-sm">Join BriefingTime and get started today.</p>
+    </div>
+    <form #registerForm="ngForm" (ngSubmit)="register()" class="space-y-5">
+      <div class="space-y-2">
+        <label class="block text-base font-semibold text-zinc-900 ml-1">Email</label>
+        <input
+          [(ngModel)]="creds.email"
+          type="email"
+          name="email"
+          required
+          class="w-full bg-white/60 border border-white focus:bg-white rounded-full px-5 py-3 text-zinc-800 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder:text-zinc-400"
+          placeholder="name@company.com">
+      </div>
+      <div class="space-y-2">
+        <label class="block text-base font-semibold text-zinc-900 ml-1">Username</label>
+        <input
+          [(ngModel)]="creds.userName"
+          type="text"
+          name="userName"
+          required
+          class="w-full bg-white/60 border border-white focus:bg-white rounded-full px-5 py-3 text-zinc-800 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder:text-zinc-400"
+          placeholder="Choose a username">
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="space-y-2">
+          <label class="block text-base font-semibold text-zinc-900 ml-1">First Name</label>
           <input
             [(ngModel)]="creds.firstName"
             type="text"
             name="firstName"
-            class="w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/60"
-            placeholder="Firstname">
+            required
+            class="w-full bg-white/60 border border-white focus:bg-white rounded-full px-5 py-3 text-zinc-800 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder:text-zinc-400"
+            placeholder="Jane">
+        </div>
+        <div class="space-y-2">
+          <label class="block text-base font-semibold text-zinc-900 ml-1">Last Name</label>
           <input
             [(ngModel)]="creds.lastName"
             type="text"
             name="lastName"
-            class="w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/60"
-            placeholder="Lastname">
+            required
+            class="w-full bg-white/60 border border-white focus:bg-white rounded-full px-5 py-3 text-zinc-800 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder:text-zinc-400"
+            placeholder="Doe">
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="space-y-2">
+          <label class="block text-base font-semibold text-zinc-900 ml-1">Password</label>
           <input
             [(ngModel)]="creds.password"
             type="password"
             name="password"
-            class=" w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/60"
-            placeholder="Password">
+            required
+            class="w-full bg-white/60 border border-white focus:bg-white rounded-full px-5 py-3 text-zinc-800 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder:text-zinc-400"
+            placeholder="Create password">
+        </div>
+        <div class="space-y-2">
+          <label class="block text-base font-semibold text-zinc-900 ml-1">Confirm Password</label>
           <input
             [(ngModel)]="creds.confirmPassword"
             type="password"
             name="confirmPassword"
-            class=" w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/60"
-            placeholder="Confirm Password">
+            required
+            class="w-full bg-white/60 border border-white focus:bg-white rounded-full px-5 py-3 text-zinc-800 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder:text-zinc-400"
+            placeholder="Repeat password">
         </div>
       </div>
-      <button type="submit" class="bg-zinc-500 rounded-full p-2 text-zinc-300 shadow-3xl hover:text-zinc-200 hover:bg-zinc-600">Register</button>
+      <button
+        type="submit"
+        [disabled]="!registerForm.valid"
+        class="w-full bg-zinc-800 text-white font-medium text-lg rounded-full py-3 shadow-lg hover:bg-zinc-900 hover:shadow-xl active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-6">
+        Register
+      </button>
     </form>
-    <div>
-      <p>Already have an account?</p>
-      <a class="text-purple-600 hover:text-purple-700" routerLink="/login">
-        Sing in
-      </a>
+    <div class="mt-8 text-center text-sm text-zinc-600">
+      <p>Already have an account?
+        <a routerLink="/login" class="font-bold text-purple-600 hover:text-purple-700 hover:underline transition-all">
+          Sign in here
+        </a>
+      </p>
     </div>
+
   </div>
 </div>

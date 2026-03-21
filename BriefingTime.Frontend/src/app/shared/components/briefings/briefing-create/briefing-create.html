@@ -1,54 +1,79 @@
-<div class="flex justify-center text-3xl w-full h-full p-10 space-y-10">
-  <div>
-    <div class="font-bold mb-15 text-purple-600">Create Briefing:</div>
-    <form #loginForm="ngForm" (ngSubmit)="submitBriefing()" class="mb-15 px-10">
-      <div class="flex w-full h-full">
-        <div class="mb-5 space-x-10 space-y-5 mr-5">
-          <p>Title </p>
-          <p>Description </p>
-          <p>Department </p>
-          <p>File </p>
-        </div>
-        <div class="space-x-10 space-y-5">
-          <input
-            [(ngModel)]="creds.title"
-            type="text"
-            name="Title"
-            class="w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/60"
-            placeholder="Title">
-          <input
-            [(ngModel)]="creds.description"
-            type="text"
-            name="Description"
-            class="w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/60"
-            placeholder="Description">
+<div class="flex items-center justify-center w-full h-full min-h-[70vh] py-10">
+
+  <div class="w-full max-w-lg p-8 bg-white/40 backdrop-blur-md border border-white/60 rounded-3xl shadow-xl">
+
+    <div class="text-center mb-8">
+      <h2 class="text-3xl font-extrabold text-zinc-900 tracking-tight">Create Briefing</h2>
+      <p class="text-zinc-500 mt-2 text-sm">Upload a new document for your department.</p>
+    </div>
+
+    <!-- Changed #loginForm to #briefingForm for clarity -->
+    <form #briefingForm="ngForm" (ngSubmit)="submitBriefing()" class="space-y-5">
+
+      <div class="space-y-2">
+        <label class="block text-base font-semibold text-zinc-900 ml-1">Title</label>
+        <input
+          [(ngModel)]="creds.title"
+          type="text"
+          name="title"
+          required
+          class="w-full bg-white/60 border border-white focus:bg-white rounded-full px-5 py-3 text-zinc-800 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder:text-zinc-400"
+          placeholder="Enter briefing title">
+      </div>
+
+      <div class="space-y-2">
+        <label class="block text-base font-semibold text-zinc-900 ml-1">Description</label>
+        <!-- Upgraded to a textarea so users have more room to type -->
+        <textarea
+          [(ngModel)]="creds.description"
+          name="description"
+          required
+          rows="3"
+          class="w-full bg-white/60 border border-white focus:bg-white rounded-2xl px-5 py-3 text-zinc-800 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder:text-zinc-400 resize-none"
+          placeholder="What is this briefing about?"></textarea>
+      </div>
+
+      <div class="space-y-2">
+        <label class="block text-base font-semibold text-zinc-900 ml-1">Department</label>
+        <div class="relative">
           <select
             [(ngModel)]="creds.departmentId"
-            name="DepartmentId"
-            class="w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/80">
+            name="departmentId"
+            required
+            class="w-full bg-white/60 border border-white focus:bg-white rounded-full px-5 py-3 text-zinc-800 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent appearance-none cursor-pointer">
             <option value="" disabled selected>Select a department...</option>
             @for (dept of departments(); track dept.id) {
               <option [value]="dept.id">{{ dept.name }}</option>
             }
           </select>
-          <!--
-          <input
-            [(ngModel)]="creds.departmentId"
-            type="text"
-            name="DepartmentId"
-            class="w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/60"
-            placeholder="Department Name">
-            -->
-          <input
-            (change)="onFileSelected($event)"
-            accept=".pdf"
-            name="File"
-            type="file"
-            class="w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/60"
-            placeholder="File">
+          <!-- Custom Dropdown Arrow -->
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-zinc-500">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
         </div>
       </div>
-      <button type="submit" class="bg-zinc-500 rounded-full p-2 text-zinc-300 shadow-3xl hover:text-zinc-200 hover:bg-zinc-600">Submit</button>
+
+      <div class="space-y-2">
+        <label class="block text-base font-semibold text-zinc-900 ml-1">Document File</label>
+        <input
+          (change)="onFileSelected($event)"
+          accept=".pdf,.epub"
+          name="file"
+          type="file"
+          required
+          class="w-full text-zinc-600 bg-white/60 border border-white rounded-full pl-2 pr-4 py-2 shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500 cursor-pointer transition-all
+                 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-bold file:bg-purple-100 file:text-purple-700 hover:file:bg-purple-200 hover:file:text-purple-800 file:transition-colors file:cursor-pointer">
+      </div>
+
+      <button
+        type="submit"
+        [disabled]="!briefingForm.valid"
+        class="w-full bg-zinc-800 text-white font-medium text-lg rounded-full py-3 shadow-lg hover:bg-zinc-900 hover:shadow-xl active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-6">
+        Submit Briefing
+      </button>
+
     </form>
   </div>
 </div>

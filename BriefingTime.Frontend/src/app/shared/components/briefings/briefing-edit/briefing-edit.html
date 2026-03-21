@@ -1,38 +1,73 @@
-<div class="flex justify-center text-3xl w-full h-full p-10 space-y-10">
-  <div>
-    <div class="font-bold mb-15 text-purple-600">Create Briefing:</div>
-    <form #loginForm="ngForm" (ngSubmit)="submitBriefing()" class="mb-15 px-10">
-      <div class="flex w-full h-full">
-        <div class="mb-5 space-x-10 space-y-5 mr-5">
-          <p>Title </p>
-          <p>Description </p>
-          <p>Department </p>
-        </div>
-        <div class="space-x-10 space-y-5">
-          <input
-            [(ngModel)]="creds.title"
-            type="text"
-            name="Title"
-            class="w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/60"
-            placeholder="Title">
-          <input
-            [(ngModel)]="creds.description"
-            type="text"
-            name="Description"
-            class="w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/60"
-            placeholder="Description">
+<div class="flex items-center justify-center w-full h-full min-h-[70vh] py-10">
+
+  <div class="w-full max-w-lg p-8 bg-white/40 backdrop-blur-md border border-white/60 rounded-[2.5rem] shadow-xl">
+
+    <div class="text-center mb-8">
+      <h2 class="text-3xl font-black text-zinc-900 tracking-tight">Edit Briefing</h2>
+      <p class="text-zinc-500 mt-2 text-sm font-medium">Update the details for this publication.</p>
+    </div>
+
+    <form #briefingForm="ngForm" (ngSubmit)="submitBriefing()" class="space-y-6">
+
+      <div class="space-y-2">
+        <label class="block text-base font-bold text-zinc-800 ml-1">Title</label>
+        <input
+          [(ngModel)]="creds.title"
+          type="text"
+          name="title"
+          required
+          class="w-full bg-white/60 border border-white focus:bg-white rounded-full px-5 py-3 text-zinc-800 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder:text-zinc-400"
+          placeholder="Briefing title">
+      </div>
+
+      <div class="space-y-2">
+        <label class="block text-base font-bold text-zinc-800 ml-1">Description</label>
+        <textarea
+          [(ngModel)]="creds.description"
+          name="description"
+          required
+          rows="4"
+          class="w-full bg-white/60 border border-white focus:bg-white rounded-3xl px-5 py-3 text-zinc-800 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent placeholder:text-zinc-400 resize-none"
+          placeholder="Describe the content..."></textarea>
+      </div>
+
+      <div class="space-y-2">
+        <label class="block text-base font-bold text-zinc-800 ml-1">Department</label>
+        <div class="relative">
           <select
             [(ngModel)]="creds.departmentId"
-            name="DepartmentId"
-            class="w-full bg-zinc-200/50 rounded-full px-3 shadow-3xl hover:bg-zinc-200/80">
-            <option value="" disabled selected>Select a department...</option>
+            name="departmentId"
+            required
+            class="w-full bg-white/60 border border-white focus:bg-white rounded-full px-5 py-3 text-zinc-800 shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent appearance-none cursor-pointer">
+            <option value="" disabled>Select a department...</option>
             @for (dept of departments(); track dept.id) {
               <option [value]="dept.id">{{ dept.name }}</option>
             }
           </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-5 text-zinc-500">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
         </div>
       </div>
-      <button type="submit" class="bg-zinc-500 rounded-full p-2 text-zinc-300 shadow-3xl hover:text-zinc-200 hover:bg-zinc-600">Submit</button>
+
+      <div class="flex flex-col sm:flex-row gap-3 pt-4">
+        <button
+          type="submit"
+          [disabled]="!briefingForm.valid"
+          class="flex-1 bg-purple-600 text-white font-bold text-lg rounded-full py-3 shadow-lg hover:bg-purple-700 hover:shadow-purple-200 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+          Save Changes
+        </button>
+
+        <button
+          type="button"
+          routerLink="/my-account"
+          class="flex-1 bg-zinc-100 text-zinc-600 font-bold text-lg rounded-full py-3 hover:bg-zinc-200 active:scale-[0.98] transition-all">
+          Cancel
+        </button>
+      </div>
+
     </form>
   </div>
 </div>
