@@ -7,6 +7,8 @@ import { MyAccount } from "./shared/components/account/my-account/my-account";
 import { BriefingCreate } from "./shared/components/briefings/briefing-create/briefing-create";
 import { BriefingEdit } from "./shared/components/briefings/briefing-edit/briefing-edit";
 import { AllBriefings } from "./shared/components/briefings/all-briefings/all-briefings";
+import { adminGuard } from "./core/guards/admin-guard";
+import { AdminController } from "./shared/components/admin/admin-controller/admin-controller";
 
 export const routes: Routes = [
   {path: 'login', component: Login, title: 'Log In'},
@@ -15,5 +17,6 @@ export const routes: Routes = [
   {path: 'create-briefing', component: BriefingCreate, title: 'Create Briefing', canActivate: [authGuard]},
   { path: 'briefing/:id', component: BriefingDetail, title: 'Briefing' },
   { path: 'edit/:id', component: BriefingEdit, title: 'Edit Briefing' },
+  {path: 'admin', component: AdminController, title: 'Admin', canActivate: [adminGuard]},
   {path: '', component: AllBriefings, title: 'Edit Briefing'},
 ];

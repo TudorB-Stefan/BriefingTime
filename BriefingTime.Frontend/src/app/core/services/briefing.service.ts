@@ -17,6 +17,9 @@ export class BriefingService {
   getAllBriefings(){
     return this.http.get<BriefingListModel[]>(this.baseUrl + 'briefing/my-list');
   }
+  getAllBriefingsAdmin(){
+    return this.http.get<BriefingListModel[]>(this.baseUrl + 'briefing/');
+  }
   getMyBriefings(){
     return this.http.get<BriefingListModel[]>(this.baseUrl + 'briefing/my-briefings');
   }

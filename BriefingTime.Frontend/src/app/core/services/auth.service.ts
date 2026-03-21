@@ -4,6 +4,7 @@ import { SelfModel } from "../../shared/models/self.model";
 import { AuthResponseModel } from "../../shared/models/auth-response.model";
 import { tap } from "rxjs";
 import { Router } from "@angular/router";
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
@@ -47,22 +48,33 @@ export class AuthService {
   isAdmin():boolean{
     const token = localStorage.getItem('token');
     if (!token) return false;
+
     try {
       const decoded: any = jwtDecode(token);
-      const microsoftRoleClaim = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
-      const roles = decoded[microsoftRoleClaim] || decoded.role;
-      if (!roles) return false;
-      if (Array.isArray(roles)) {
-        return roles.includes('Admin');
+
+      const roleKeys = [
+        'role',
+        'roles',
+        'http://schemas.microsoft.com/ws/2008/06/identity/claims/role',
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/role'
+      ];
+
+      const actualKey = roleKeys.find(key => decoded[key]);
+      const roles = actualKey ? decoded[actualKey] : null;
+
+      if (!roles) {
+        console.warn('No roles found in token. Decoded token:', decoded);
+        return false;
       }
-      return roles === 'Admin';
+
+      const roleArray = Array.isArray(roles) ? roles : [roles];
+      return roleArray.some(r => r.toLowerCase() === 'admin');
+
     } catch (error) {
       console.error('Token decoding failed', error);
       return false;
     }
   }
 }
-function jwtDecode(token: string): any {
-    throw new Error("Function not implemented.");
-}
+
 
