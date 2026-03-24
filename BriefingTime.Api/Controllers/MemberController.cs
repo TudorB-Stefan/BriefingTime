@@ -1,18 +1,22 @@
 ﻿using BriefingTime.Api.Extensions;
 using BriefingTime.Api.DTOs;
+using BriefingTime.Api.DTOs.AdminDto;
 using BriefingTime.Api.DTOs.MemberDtos;
 using BriefingTime.Core.Interfaces.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BriefingTime.Api.Controllers;
 
 public class MemberController(IMemberRepository memberRepository) : BaseController
 {
+    
+    [Authorize(Roles = "Admin")]
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<MemberListDto>>> GetAllMembers()
+    public async Task<ActionResult<IEnumerable<MemberDepartmentsDto>>> GetAllMembers()
     {
         var users = await memberRepository.GetAllAsync();
-        var memebersDto = users.Select(u => u.ToListDto()).ToList();
+        var memebersDto = users.Select(u => u.ToAdminListDto()).ToList();
         return Ok(memebersDto);
     }
 

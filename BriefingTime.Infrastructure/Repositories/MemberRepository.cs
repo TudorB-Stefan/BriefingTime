@@ -9,7 +9,9 @@ public class MemberRepository(AppDbContext context) : IMemberRepository
 {
     public async Task<IEnumerable<User>> GetAllAsync()
     {
-        return await context.Users.ToListAsync();
+        return await context.Users
+            .Include(u => u.UserDepartments)
+            .ToListAsync();
     }
 
     public async Task<User?> GetByIdAsync(string id)

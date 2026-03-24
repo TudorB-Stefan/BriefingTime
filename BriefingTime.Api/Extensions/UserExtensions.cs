@@ -1,4 +1,5 @@
 using BriefingTime.Api.DTOs;
+using BriefingTime.Api.DTOs.AdminDto;
 using BriefingTime.Api.DTOs.AuthDtos;
 using BriefingTime.Api.DTOs.MemberDtos;
 using BriefingTime.Core.Entities;
@@ -85,6 +86,19 @@ public static class UserExtensions
             LastName = user.LastName,
             CreatedAt = user.CreatedAt,
             ModifiedAt = user.ModifiedAt
+        };
+    }
+    public static MemberDepartmentsDto ToAdminListDto(this User user)
+    {
+        return new MemberDepartmentsDto
+        {
+            Id = user.Id,
+            UserName = user.UserName,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            CreatedAt = user.CreatedAt,
+            ModifiedAt = user.ModifiedAt,
+            DepartmentIds = user.UserDepartments?.Select(ud => ud.DepartmentId).ToList() ?? new List<string>()
         };
     }
 }

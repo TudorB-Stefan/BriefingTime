@@ -3,12 +3,13 @@ using BriefingTime.Api.DTOs.AdminDto;
 using BriefingTime.Core.Entities;
 using BriefingTime.Core.Interfaces.Repositories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BriefingTime.Api.Controllers;
 
 [Authorize(Roles = "Admin")]
-public class AdminController(IAdminRepository adminRepository,IDepartmentRepository departmentRepository,IMemberRepository memberRepository) : BaseController
+public class AdminController(UserManager<User> userManager,IAdminRepository adminRepository,IDepartmentRepository departmentRepository,IMemberRepository memberRepository) : BaseController
 {
     [HttpPost("assign-department")]
     public async Task<ActionResult> AssignUserDepartment([FromBody] AssignDepartmentDto assignDepartmentDto)
@@ -28,7 +29,7 @@ public class AdminController(IAdminRepository adminRepository,IDepartmentReposit
         return Ok();
     }
 
-    [HttpDelete("{id}")]
+    [HttpDelete("department/{id}")]
     public async Task<ActionResult> DeleteUserDepartment(string userId, string departmentId)
     {
         var userDepartment = await adminRepository.FindById(userId, departmentId);
