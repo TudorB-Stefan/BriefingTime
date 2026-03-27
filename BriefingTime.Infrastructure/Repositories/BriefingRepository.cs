@@ -84,6 +84,13 @@ public class BriefingRepository(AppDbContext context) : IBriefingRepository
         await context.SaveChangesAsync();
     }
 
+    public async Task DeleteAllForUserAsync(string userId)
+    {
+        await context.Briefings
+            .Where(b => b.UserId == userId)
+            .ExecuteDeleteAsync();
+    }
+
     public async Task<IEnumerable<Briefing>> GetOldBriefings()
     {
         var oldBriefs = await context.Briefings

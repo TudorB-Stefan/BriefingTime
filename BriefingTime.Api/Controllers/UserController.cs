@@ -2,6 +2,7 @@
 using BriefingTime.Api.Extensions;
 using BriefingTime.Api.DTOs;
 using BriefingTime.Core.Entities;
+using BriefingTime.Core.Interfaces.Repositories;
 using BriefingTime.Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -11,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 namespace BriefingTime.Api.Controllers;
 
 [Authorize]
-public class UserController(UserManager<User> userManager) : BaseController
+public class UserController(UserManager<User> userManager, IBriefingRepository briefingRepository,IMemberRepository memberRepository) : BaseController
 {
     [HttpGet("me")]
     public async Task<ActionResult<SelfDto>> GetMyProfile()
@@ -42,6 +43,8 @@ public class UserController(UserManager<User> userManager) : BaseController
     {
         var user = await userManager.GetUserAsync(User);
         if (user == null) return NotFound();
+        await memberRepository.RemoveFromAllDepartments(user.Id);
+        await briefingRepository.DeleteAllForUserAsync(user.Id);
         var res = await userManager.DeleteAsync(user);
         if(!res.Succeeded)
             return BadRequest(res.Errors.Select(e => e.Description));

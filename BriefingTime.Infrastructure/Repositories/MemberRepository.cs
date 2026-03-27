@@ -28,4 +28,11 @@ public class MemberRepository(AppDbContext context) : IMemberRepository
             .Include(u => u.UploadedBriefing)
             .FirstOrDefaultAsync(u => u.UserName == username);
     }
+
+    public async Task RemoveFromAllDepartments(string userId)
+    {
+        await context.UserDepartments
+            .Where(ud => ud.UserId == userId)
+            .ExecuteDeleteAsync();
+    }
 }

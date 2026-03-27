@@ -13,5 +13,6 @@ public interface IBriefingRepository
     Task AddAsync(Briefing briefing);
     Task UpdateAsync(Briefing briefing);
     Task DeleteAsync(Briefing briefing);
+    Task DeleteAllForUserAsync(string userId);
     Task<IEnumerable<Briefing>> GetOldBriefings();
 }

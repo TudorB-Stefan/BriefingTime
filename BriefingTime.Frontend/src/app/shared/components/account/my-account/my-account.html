@@ -9,6 +9,14 @@
           <h1 class="text-3xl font-extrabold text-zinc-900 tracking-tight">{{ user.firstName }} {{ user.lastName }}</h1>
           <p class="text-purple-600 font-medium text-lg">@{{ user.userName }}</p>
         </div>
+        <button (click)="deleteSelf()"
+                class="flex items-center justify-center gap-2 px-4 py-2 md:py-1.5 bg-zinc-300 text-red-700 font-bold rounded-xl hover:bg:zinc-400 hover:text-red-500 transition-all shadow-sm borderactive:scale-95 text-sm cursor-pointer group"
+                title="Permanently Delete Account">
+          <svg class="w-4 h-4 group-hover:animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+          </svg>
+          Delete Account
+        </button>
 
         <div class="h-px w-full bg-zinc-200/80 rounded-full"></div>
 

@@ -27,6 +27,9 @@ export class AuthService {
   register(creds: any){
     return this.http.post(this.baseUrl + 'auth/register',creds);
   }
+  deleteSelf(){
+    return this.http.delete(`${this.baseUrl}user/delete-me`)
+  }
   login(creds: any){
     return this.http.post<AuthResponseModel>(this.baseUrl + 'auth/login',creds).pipe(
       tap(response => {

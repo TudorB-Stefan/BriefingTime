@@ -7,4 +7,5 @@ public interface IMemberRepository
     Task<IEnumerable<User>> GetAllAsync();
     Task<User?> GetByIdAsync(string id);
     Task<User?> GetByUsername(string username);
+    Task RemoveFromAllDepartments(string userId);
 }

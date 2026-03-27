@@ -38,6 +38,17 @@ public class AdminController(UserManager<User> userManager,IAdminRepository admi
         await adminRepository.DeleteUserDepartmetn(userDepartment);
         return Ok();
     }
+    
+    [HttpDelete("delete/{userId}")]
+    public async Task<ActionResult> DeleteUser(string userId)
+    {
+        var user = await memberRepository.GetByIdAsync(userId);
+        if (user == null) return NotFound();
+        var res = await userManager.DeleteAsync(user);
+        if(!res.Succeeded)
+            return BadRequest(res.Errors.Select(e => e.Description));
+        return Ok();
+    }
 
     [HttpPost("{userId}/make-admin")]
     public async Task<ActionResult> MakeAdmin(string userId)
