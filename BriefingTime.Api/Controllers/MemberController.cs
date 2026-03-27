@@ -2,13 +2,15 @@
 using BriefingTime.Api.DTOs;
 using BriefingTime.Api.DTOs.AdminDto;
 using BriefingTime.Api.DTOs.MemberDtos;
+using BriefingTime.Core.Entities;
 using BriefingTime.Core.Interfaces.Repositories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BriefingTime.Api.Controllers;
 
-public class MemberController(IMemberRepository memberRepository) : BaseController
+public class MemberController(IMemberRepository memberRepository,UserManager<User> userManager) : BaseController
 {
     
     [Authorize(Roles = "Admin")]
@@ -16,7 +18,11 @@ public class MemberController(IMemberRepository memberRepository) : BaseControll
     public async Task<ActionResult<IEnumerable<MemberDepartmentsDto>>> GetAllMembers()
     {
         var users = await memberRepository.GetAllAsync();
-        var memebersDto = users.Select(u => u.ToAdminListDto()).ToList();
+        
+        var adminUsers = await userManager.GetUsersInRoleAsync("Admin");
+        var adminIds = adminUsers.Select(a => a.Id).ToHashSet();
+        
+        var memebersDto = users.Select(u => u.ToAdminListDto(adminIds.Contains(u.Id))).ToList();
         return Ok(memebersDto);
     }
 

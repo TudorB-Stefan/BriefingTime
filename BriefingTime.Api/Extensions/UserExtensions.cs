@@ -88,11 +88,12 @@ public static class UserExtensions
             ModifiedAt = user.ModifiedAt
         };
     }
-    public static MemberDepartmentsDto ToAdminListDto(this User user)
+    public static MemberDepartmentsDto ToAdminListDto(this User user,bool isAdmin)
     {
         return new MemberDepartmentsDto
         {
             Id = user.Id,
+            IsAdmin = isAdmin,
             UserName = user.UserName,
             FirstName = user.FirstName,
             LastName = user.LastName,

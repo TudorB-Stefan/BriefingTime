@@ -9,9 +9,7 @@ public class DepartmentRepository(AppDbContext context) : IDepartmentRepository
 {
     public async Task<IEnumerable<Department>> GetAllAsync()
     {
-        return await context.Departments
-            .Include(d => d.Briefings)
-            .ToListAsync();
+        return await context.Departments.ToListAsync();
     }
     public async Task<IEnumerable<Department>> GetAllAsyncByUser(string userId)
     {

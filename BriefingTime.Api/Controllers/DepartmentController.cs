@@ -15,7 +15,7 @@ public class DepartmentController(IDepartmentRepository departmentRepository) : 
     public async Task<ActionResult<IEnumerable<DepartmentListDto>>> GetAll()
     {
         var departments = await departmentRepository.GetAllAsync();
-        var departmentDtos = departments.Select(c => c.ToListDto());
+        var departmentDtos = departments.Select(d => d.ToListDto()).ToList();
         return Ok(departmentDtos);
     }
     [Authorize]
@@ -24,7 +24,7 @@ public class DepartmentController(IDepartmentRepository departmentRepository) : 
     {
         var userId = User.GetUserId();
         var departments = await departmentRepository.GetAllAsyncByUser(userId);
-        var departmentDtos = departments.Select(c => c.ToListDto());
+        var departmentDtos = departments.Select(d => d.ToListDto());
         return Ok(departmentDtos);
     }
 
